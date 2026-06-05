@@ -58,11 +58,13 @@ Both modes should be accessible from the same page — a toggle or tab at the to
   id: string,
   name: string,
   effects: [effectId, effectId, effectId, effectId],  // ordered, first = most potent
-  source: "base" | "dawnguard" | "dragonborn" | "hearthfire",
+  source: "base" | "dawnguard" | "dragonborn" | "hearthfire" | "anniversary",
   isPlantable: boolean,       // can be grown in Hearthfire farm plots
-  locations: string[]         // general location hints (optional, v1)
+  locationHints: string[]     // broad hints only — hold/region/vendor type, not spawn coords
 }
 ```
+
+**Note on Anniversary Edition content:** AE bundles ~26 Creation Club packs. The most alchemy-relevant is *Rare Curios*, which adds ~40 ingredients from Morrowind and Oblivion (Bonemeal, Saltrice, Marshmerrow, etc.). All AE ingredients share `source: "anniversary"` and are hidden unless the user enables AE in settings.
 
 #### Effect
 ```
@@ -83,20 +85,33 @@ Both modes should be accessible from the same page — a toggle or tab at the to
 }
 ```
 
-**Data source:** Manually curated JSON files in `/src/data/`. Skyrim ingredient data is stable and complete — no backend required. There are ~100 base game ingredients + ~30 DLC ingredients.
+**Data source:** Manually curated JSON files in `/src/data/`. Skyrim ingredient data is stable and complete — no backend required. Approximate counts:
+- Base game: ~100 ingredients
+- Dawnguard: ~10
+- Dragonborn: ~20
+- Hearthfire: minor (mostly affects `isPlantable` flags on existing ingredients)
+- Anniversary Edition (Rare Curios + others): ~40
+
+**Location hint policy:** Only include hints where we are confident. Use broad descriptors only: hold names, vendor types (apothecary merchants), or environment types (tundra, swamps, caves). Do not include specific spawn coordinates. Omit location data entirely for ingredients where the right answer requires precision — a missing hint is better than a wrong one. This field is populated incrementally and may be empty for rare/AE ingredients in v1.
 
 ---
 
-### 3.4 Filters & Display Options
+### 3.4 Filters & Settings
 
-**Filter panel (persistent sidebar or collapsible)**
+Filters live in two places:
 
-| Filter | Description |
-|--------|-------------|
-| DLC source | Checkboxes: Base Game, Dawnguard, Dragonborn, Hearthfire. Off = hide that ingredient from results |
-| Plantable only | Toggle: show only ingredients growable in Hearthfire farm plots |
-| Effect type | Show only beneficial / harmful / both |
-| Hide negative effects | Hide results that include any harmful effect (overridden by Purity perk) |
+**Settings modal** (gear icon, persisted to localStorage — set once, forget)
+- Content flags: checkboxes for Dawnguard, Dragonborn, Hearthfire, Anniversary Edition. Base game always on.
+- Alchemy skill level (numeric input, 1–100)
+- Perk selections (see §3.5)
+- Theme selector (see §4.3)
+
+**Inline filter bar** (on the Potion Mixer page, always visible)
+- Plantable only toggle — show only ingredients growable in Hearthfire farm plots
+- Effect type — beneficial / harmful / both
+- Hide mixed-effect results — hide potions that contain both beneficial and harmful effects (overridden by Purity perk)
+
+The split keeps persistent preferences out of the main workflow without burying commonly-used filters in a modal.
 
 ---
 
@@ -193,7 +208,41 @@ If user accounts, saved builds, or community recipes are added later:
 - **Frontend:** Stays on GitHub Pages, calls the Render API
 - **Caveat:** Render free tier spins down after 15 min of inactivity — ~30s cold start. Acceptable for personal use.
 
-### 4.4 Folder Structure
+### 4.3 CSS Framework: Mantine
+
+**Decision: Mantine v7** (not Tailwind, not MUI, not Chakra).
+
+Reasons:
+- TypeScript-native — no extra type packages needed
+- Theming is CSS-variable-based: defining multiple named themes (e.g. Nordic Dark, Parchment) is built into its design system, not a workaround
+- Ships with light/dark mode toggle support out of the box
+- Component library covers everything this project needs: Modal, MultiSelect, Checkbox, Switch, Slider, Tabs, Tooltip, Drawer — no reaching for additional libraries
+- Mobile-responsive by default; components use a fluid grid system
+- Does not impose a strong visual identity (unlike MUI/Google Material) — easy to restyle for Skyrim aesthetic
+- No Tailwind dependency; uses CSS Modules internally
+
+**Theming plan:** Three selectable themes, stored in localStorage:
+| Theme | Description |
+|-------|-------------|
+| Nordic Dark | Dark slate grays, warm amber/gold accents — matches the vanilla Skyrim UI palette |
+| Parchment | Warm cream/sepia tones, aged-paper aesthetic — high contrast light mode |
+| System | Follows OS light/dark preference, using the Parchment and Nordic palettes respectively |
+
+Theme toggle lives in the settings modal. Default is System.
+
+### 4.4 Mobile-First Layout
+
+**Decision: mobile-first, responsive up to desktop.**
+
+Rationale: the site is most likely used on a phone next to a TV or console. On small screens:
+- Mode toggle (ingredients / effects) is at the top as a full-width segmented control
+- Filter bar collapses into a "Filters" button that opens a bottom sheet
+- Results stack vertically as cards
+- Settings modal becomes a full-screen bottom sheet
+
+On tablet/desktop the layout expands: filter sidebar appears inline, results show in a grid.
+
+### 4.5 Folder Structure
 
 ```
 /
@@ -206,10 +255,13 @@ If user accounts, saved builds, or community recipes are added later:
 │   │   ├── IngredientPicker/
 │   │   ├── EffectPicker/
 │   │   ├── PerkPanel/
-│   │   └── ResultList/
+│   │   ├── ResultList/
+│   │   └── SettingsModal/
 │   ├── lib/
-│   │   ├── alchemy.ts       # potion calculation logic
+│   │   ├── alchemy.ts       # potion combination logic
 │   │   └── value.ts         # gold value estimation
+│   ├── theme/
+│   │   └── themes.ts        # Mantine theme objects for each named theme
 │   └── pages/
 │       ├── Home.tsx
 │       └── PotionMixer.tsx
@@ -224,18 +276,17 @@ If user accounts, saved builds, or community recipes are added later:
 
 ## 5. Open Questions — Decisions Needed Before Building
 
-These need answers before starting development:
-
-| # | Question | Options | Recommendation |
-|---|----------|---------|----------------|
-| 1 | **Scope: which Skyrim version?** | Anniversary Edition adds ~70 CC ingredients on top of the 3 DLC | Start with base + 3 DLC. Add AE as a separate filter toggle later. |
-| 2 | **Ingredient location data?** | Rough location hints vs. none vs. full spawn data | Rough hints only in v1 (e.g. "forests, sold by apothecaries") — full spawn data is a separate tool |
-| 3 | **Mobile vs desktop priority?** | Mobile-first responsive vs. desktop-first | Desktop-first for v1 (alchemy is a PC/console task, likely used on a second screen), responsive down to tablet |
-| 4 | **Theming** | Minimal/clean utility vs. Skyrim-styled (dark stone, rune fonts) | Lean into Skyrim aesthetic slightly — dark background, earthy tones — but keep UI clean enough to be fast |
-| 5 | **Saved ingredient lists** | localStorage only vs. shareable URL vs. both | URL state for sharing + localStorage for "my ingredients" list |
-| 6 | **Max combinations shown** | With 20 selected ingredients there are 1140 possible 3-ingredient combos — show all? paginate? | Cap display at top 50 by estimated value, with "show more" |
-| 7 | **Custom domain?** | `georgecampbel.github.io/skyrim` vs. a custom domain | Fine to start with GitHub Pages default; easy to add a domain later |
-| 8 | **Testing strategy** | No tests vs. unit tests for alchemy logic only vs. full test suite | Unit tests for `alchemy.ts` and `value.ts` — the combinatorics logic is worth testing; no UI tests needed for a personal tool |
+| # | Question | Status | Decision |
+|---|----------|--------|----------|
+| 1 | **DLC scope** | ✅ Decided | Base + Dawnguard + Dragonborn + Hearthfire always available. Anniversary Edition as an opt-in flag in settings modal. |
+| 2 | **Location data** | ✅ Decided | Include broad hints (hold, environment, vendor type) where confident. Omit rather than guess. Added incrementally post-MVP. |
+| 3 | **Mobile vs desktop** | ✅ Decided | Mobile-first. Responsive up to desktop. Filter bar collapses to bottom sheet on small screens. |
+| 4 | **Theming** | ✅ Decided | Mantine with 3 named themes: Nordic Dark, Parchment, System. Selector in settings modal. |
+| 5 | **CSS framework** | ✅ Decided | Mantine v7 — see §4.3. |
+| 6 | **Saved ingredient lists** | Open | URL state for sharing + localStorage for "my ingredients" list — confirm? |
+| 7 | **Max combinations shown** | Open | Propose: cap at top 50 sorted by estimated value (or effect count if no skill set), "show more" button for the rest. Confirm? |
+| 8 | **Custom domain** | Open | Start with `georgecampbel.github.io/skyrim`. Easy to add a domain later. |
+| 9 | **Testing strategy** | Open | Propose: Vitest unit tests for `alchemy.ts` and `value.ts` only — the combinatorics is the risky logic worth covering. No UI tests for a personal tool. Confirm? |
 
 ---
 
@@ -243,16 +294,16 @@ These need answers before starting development:
 
 To ship something useful quickly, the MVP is:
 
-- [ ] Ingredient database (base game + 3 DLC) as JSON
-- [ ] Mode A: select ingredients → see valid potions
+- [ ] Ingredient + effect data files (base game + 3 DLC)
+- [ ] Mode A: select ingredients → see valid potion combinations
 - [ ] Mode B: select desired effects → see ingredient combinations
-- [ ] DLC source filter
-- [ ] Plantable filter
-- [ ] Perk panel (Purity + Benefactor/Poisoner minimum)
-- [ ] Homepage with navigation to Potion Mixer
-- [ ] GitHub Pages deploy via GitHub Actions
+- [ ] Inline filter bar: plantable toggle, effect type, hide mixed results
+- [ ] Settings modal: DLC content flags, perk selections, theme selector
+- [ ] Mantine theme setup: Nordic Dark + Parchment + System
+- [ ] Homepage with navigation cards
+- [ ] GitHub Actions deploy to GitHub Pages
 
-**Out of scope for MVP:** value estimation, shareable URLs, ingredient detail panel, AE content, location hints.
+**Out of scope for MVP:** value estimation, shareable URLs, ingredient detail panel, AE content data, location hints, "what's missing" mode.
 
 ---
 
