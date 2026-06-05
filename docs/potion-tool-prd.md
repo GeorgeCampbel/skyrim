@@ -152,7 +152,7 @@ This is a guide value, not exact — display as "~450 gold" to set expectations.
 
 These are worth discussing before building:
 
-1. **Shareable URLs** — Encode the current ingredient selection or effect filter into the URL query string so you can bookmark or share a specific query. No backend needed; pure URL state.
+1. **Shareable URLs** — The potion tool's current selection is encoded as a clean route, not query params, so it can be bookmarked, shared, and indexed. E.g. `/potions/brew/blue-mountain-flower+wheat+lavender`. Static ingredient and effect pages (`/ingredients/[slug]`, `/effects/[slug]`) are pre-rendered at build time and fully indexable.
 
 2. **"What's missing" mode** — Given a desired potion effect, show which single ingredient you'd need to add to your current selection to unlock that effect.
 
@@ -168,103 +168,138 @@ These are worth discussing before building:
 
 ## 4. Technical Architecture
 
-### 4.1 Recommended Stack: React SPA (no backend)
+### 4.1 Stack
 
-All ingredient and effect data is static and will never change. A backend (Flask or otherwise) adds deployment complexity, cold-start latency, and cost for zero benefit at this stage.
+| Layer | Decision |
+|-------|----------|
+| Framework | **Next.js** (App Router, `output: 'export'`) |
+| Language | TypeScript |
+| Styling | **Tailwind CSS v4** |
+| Components | **shadcn/ui** (Radix UI primitives + Tailwind) |
+| Testing | **Vitest** (logic only) |
+| Hosting | **GitHub Pages** (free, via GitHub Actions) |
 
-**Recommended:** Vite + React (TypeScript), with all game data in versioned JSON files in `/src/data/`.
+No backend. All data is static JSON. No API routes, no server-side rendering at runtime — Next.js runs at build time only.
 
-All potion logic (effect intersection, value estimation) lives in pure TypeScript utility functions — easy to test, no server needed.
+---
 
-**Why not Flask:**
-- No dynamic data, no user accounts, no server-side computation needed
-- Flask would require a separate hosting service; adds maintenance burden
-- Re-evaluate if user accounts or community features are added later
+### 4.2 Why Next.js over plain Vite
 
-### 4.2 Free Hosting via GitHub Pages
+The key requirement is **Google-indexable pages** for each ingredient and effect. Next.js App Router with static export achieves this: ingredient and effect pages are pre-rendered to HTML at build time via `generateStaticParams()`, so crawlers see real content without executing JavaScript.
 
-GitHub Pages hosts static sites for free from a repo's `gh-pages` branch or `/docs` folder. With Vite:
+The potion tool itself (`/potions`) is a Client Component (`'use client'`) — fully interactive React, just not pre-rendered beyond the shell.
 
+```ts
+// next.config.ts
+const nextConfig = {
+  output: 'export',   // produces /out as pure static HTML/CSS/JS
+  trailingSlash: true,
+}
 ```
-# Deploy command
-npm run build          # outputs to /dist
-# Push /dist to gh-pages branch via GitHub Actions
-```
 
-**Recommended CI/CD:** A single GitHub Actions workflow on push to `main` that runs `npm run build` and deploys to GitHub Pages. Zero cost, automated.
+---
 
-**URL:** Will be `https://georgecampbel.github.io/skyrim` (or a custom domain if desired — GitHub Pages supports free custom domains with HTTPS via Let's Encrypt).
+### 4.3 Styling: Tailwind + shadcn/ui
 
-**Limitations of GitHub Pages:**
-- Static only (no server-side rendering, no API routes)
-- 1GB soft storage limit — not a concern here
-- 100GB/month bandwidth — not a concern for personal use
+**Tailwind CSS v4** for all layout and utility styling.
 
-### 4.3 Alternative: If a Backend Becomes Needed
+**shadcn/ui** for interactive components (Modal/Dialog, Select, Checkbox, Switch, Tooltip, Sheet/Drawer). shadcn/ui components are copied into the repo as source files — no library lock-in, fully customisable with Tailwind classes.
 
-If user accounts, saved builds, or community recipes are added later:
-- **Backend:** FastAPI (Python) on Render free tier (not Flask — FastAPI is faster and has better async support)
-- **Database:** Supabase free tier (Postgres + auth)
-- **Frontend:** Stays on GitHub Pages, calls the Render API
-- **Caveat:** Render free tier spins down after 15 min of inactivity — ~30s cold start. Acceptable for personal use.
+**Theming** uses CSS custom properties defined in `globals.css`, toggled via a `data-theme` attribute on `<html>`. Three themes:
 
-### 4.3 CSS Framework: Mantine
-
-**Decision: Mantine v7** (not Tailwind, not MUI, not Chakra).
-
-Reasons:
-- TypeScript-native — no extra type packages needed
-- Theming is CSS-variable-based: defining multiple named themes (e.g. Nordic Dark, Parchment) is built into its design system, not a workaround
-- Ships with light/dark mode toggle support out of the box
-- Component library covers everything this project needs: Modal, MultiSelect, Checkbox, Switch, Slider, Tabs, Tooltip, Drawer — no reaching for additional libraries
-- Mobile-responsive by default; components use a fluid grid system
-- Does not impose a strong visual identity (unlike MUI/Google Material) — easy to restyle for Skyrim aesthetic
-- No Tailwind dependency; uses CSS Modules internally
-
-**Theming plan:** Three selectable themes, stored in localStorage:
 | Theme | Description |
 |-------|-------------|
-| Nordic Dark | Dark slate grays, warm amber/gold accents — matches the vanilla Skyrim UI palette |
+| Nordic Dark | Dark slate grays, warm amber/gold accents — matches vanilla Skyrim UI palette |
 | Parchment | Warm cream/sepia tones, aged-paper aesthetic — high contrast light mode |
-| System | Follows OS light/dark preference, using the Parchment and Nordic palettes respectively |
+| System | Follows OS light/dark preference, maps to Nordic/Parchment respectively |
 
-Theme toggle lives in the settings modal. Default is System.
+Active theme stored in localStorage. Selector in the settings modal.
 
-### 4.4 Mobile-First Layout
+---
 
-**Decision: mobile-first, responsive up to desktop.**
+### 4.4 Routing & Static Generation
 
-Rationale: the site is most likely used on a phone next to a TV or console. On small screens:
-- Mode toggle (ingredients / effects) is at the top as a full-width segmented control
-- Filter bar collapses into a "Filters" button that opens a bottom sheet
-- Results stack vertically as cards
-- Settings modal becomes a full-screen bottom sheet
+```
+/                               → Homepage (navigation hub)
+/potions                        → Potion Mixer tool (interactive, client component)
+/ingredients                    → Ingredient list (static)
+/ingredients/[slug]             → Individual ingredient page (statically generated)
+/effects                        → Effect list (static)
+/effects/[slug]                 → Individual effect page (statically generated)
+```
 
-On tablet/desktop the layout expands: filter sidebar appears inline, results show in a grid.
+Ingredient and effect detail pages are generated from the JSON data files at build time. The potion tool URL can encode selections as a clean path segment for shareability, though dynamic combination paths are not pre-rendered (too many permutations).
 
-### 4.5 Folder Structure
+---
+
+### 4.5 Hosting: GitHub Pages
+
+Next.js static export outputs to `/out`. A GitHub Actions workflow on push to `main` builds and deploys this folder to GitHub Pages.
+
+```yaml
+# .github/workflows/deploy.yml (outline)
+- run: npm run build          # next build → /out
+- uses: actions/deploy-pages  # deploys /out to GitHub Pages
+```
+
+**URL:** `https://georgecampbel.github.io/skyrim`
+Custom domain can be added at any time — GitHub Pages supports it with free HTTPS via Let's Encrypt.
+
+**Free tier limits** (not a concern for this project):
+- 1GB repo size soft limit
+- 100GB/month bandwidth
+
+---
+
+### 4.6 Mobile-First Layout
+
+The site is most likely used on a phone as a second screen while playing. Layout decisions:
+
+- On mobile: mode toggle is a full-width segmented control at the top; filter bar collapses to a "Filters" button opening a bottom sheet (shadcn/ui Sheet); results stack as cards
+- On tablet/desktop: filter sidebar appears inline; results display in a grid
+
+---
+
+### 4.7 If a Backend Is Ever Needed
+
+If user accounts, saved builds, or community recipes are added later:
+- **Backend:** FastAPI on Render free tier
+- **Database:** Supabase free tier (Postgres + auth)
+- **Caveat:** Render free tier spins down after 15 min of inactivity (~30s cold start). Acceptable for personal use.
+
+---
+
+### 4.8 Folder Structure
 
 ```
 /
+├── app/
+│   ├── page.tsx                        # Homepage
+│   ├── potions/
+│   │   └── page.tsx                    # Potion Mixer (client component)
+│   ├── ingredients/
+│   │   ├── page.tsx                    # Ingredient list
+│   │   └── [slug]/
+│   │       └── page.tsx                # Individual ingredient (static)
+│   └── effects/
+│       ├── page.tsx                    # Effect list
+│       └── [slug]/
+│           └── page.tsx                # Individual effect (static)
 ├── src/
 │   ├── data/
 │   │   ├── ingredients.json
 │   │   └── effects.json
 │   ├── components/
+│   │   ├── ui/                         # shadcn/ui components
 │   │   ├── PotionMixer/
 │   │   ├── IngredientPicker/
 │   │   ├── EffectPicker/
 │   │   ├── PerkPanel/
 │   │   ├── ResultList/
 │   │   └── SettingsModal/
-│   ├── lib/
-│   │   ├── alchemy.ts       # potion combination logic
-│   │   └── value.ts         # gold value estimation
-│   ├── theme/
-│   │   └── themes.ts        # Mantine theme objects for each named theme
-│   └── pages/
-│       ├── Home.tsx
-│       └── PotionMixer.tsx
+│   └── lib/
+│       ├── alchemy.ts                  # potion combination logic
+│       └── value.ts                    # gold value estimation
 ├── docs/
 │   └── potion-tool-prd.md
 └── .github/
@@ -281,12 +316,12 @@ On tablet/desktop the layout expands: filter sidebar appears inline, results sho
 | 1 | **DLC scope** | ✅ Decided | Base + Dawnguard + Dragonborn + Hearthfire always available. Anniversary Edition as an opt-in flag in settings modal. |
 | 2 | **Location data** | ✅ Decided | Include broad hints (hold, environment, vendor type) where confident. Omit rather than guess. Added incrementally post-MVP. |
 | 3 | **Mobile vs desktop** | ✅ Decided | Mobile-first. Responsive up to desktop. Filter bar collapses to bottom sheet on small screens. |
-| 4 | **Theming** | ✅ Decided | Mantine with 3 named themes: Nordic Dark, Parchment, System. Selector in settings modal. |
-| 5 | **CSS framework** | ✅ Decided | Mantine v7 — see §4.3. |
-| 6 | **Saved ingredient lists** | Open | URL state for sharing + localStorage for "my ingredients" list — confirm? |
-| 7 | **Max combinations shown** | Open | Propose: cap at top 50 sorted by estimated value (or effect count if no skill set), "show more" button for the rest. Confirm? |
-| 8 | **Custom domain** | Open | Start with `georgecampbel.github.io/skyrim`. Easy to add a domain later. |
-| 9 | **Testing strategy** | Open | Propose: Vitest unit tests for `alchemy.ts` and `value.ts` only — the combinatorics is the risky logic worth covering. No UI tests for a personal tool. Confirm? |
+| 4 | **Theming** | ✅ Decided | 3 named themes: Nordic Dark, Parchment, System. CSS variables on `data-theme`. Selector in settings modal. |
+| 5 | **CSS framework** | ✅ Decided | Tailwind CSS v4 + shadcn/ui — see §4.3. |
+| 6 | **Shareable URLs** | ✅ Decided | Clean routes (not query params) for shareability and indexability. Dynamic combination paths are client-side routes; ingredient/effect pages are statically generated. |
+| 7 | **Max combinations shown** | ✅ Decided | No cap — results are naturally bounded by ingredient selection and filters. |
+| 8 | **Testing strategy** | ✅ Decided | Vitest unit tests for `alchemy.ts` and `value.ts` only. No UI tests. |
+| 9 | **Custom domain** | Open | Start with `georgecampbel.github.io/skyrim`. Easy to add a domain later. |
 
 ---
 
@@ -299,7 +334,7 @@ To ship something useful quickly, the MVP is:
 - [ ] Mode B: select desired effects → see ingredient combinations
 - [ ] Inline filter bar: plantable toggle, effect type, hide mixed results
 - [ ] Settings modal: DLC content flags, perk selections, theme selector
-- [ ] Mantine theme setup: Nordic Dark + Parchment + System
+- [ ] Tailwind theme setup: Nordic Dark + Parchment + System via CSS variables
 - [ ] Homepage with navigation cards
 - [ ] GitHub Actions deploy to GitHub Pages
 
