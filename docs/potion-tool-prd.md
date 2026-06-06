@@ -277,6 +277,7 @@ All paths below are relative to the `basePath` (see §4.5 — on github.io the l
 /                               → Homepage (navigation hub)
 /alchemy                        → Potion Mixer tool, empty (interactive client component)
 /alchemy/[seg]                  → Tool pre-loaded with a selection (see resolution rules below)
+/alchemy/potions                → Index of all valid potion combinations, grouped by effect
 /ingredients                    → Lightweight static index, links into /alchemy/[slug]
 /effects                        → Lightweight static index, links into /alchemy/[slug]
 ```
@@ -284,28 +285,35 @@ All paths below are relative to the `basePath` (see §4.5 — on github.io the l
 There are **no** standalone `/ingredients/[slug]` or `/effects/[slug]` detail pages. A single ingredient or effect *is* the tool pre-loaded with that selection, so both fold into the unified `/alchemy/[seg]` namespace.
 
 **`/alchemy/[seg]` resolution rules**
-- `seg` contains `+` → a list of ingredients (a brew combo), e.g. `/alchemy/wheat+lavender`. Always ingredients-only. **Client-side, not pre-rendered.**
-- `seg` has no `+` → look the slug up in the data:
-  - matches an **ingredient** → tool pre-loaded with that ingredient selected
-  - matches an **effect** → tool pre-loaded with that effect selected
-  - **Statically pre-rendered** (see below).
 
-**Static, indexable pages** (the SEO workhorses): every single ingredient (~170) and single effect (~70) is pre-rendered at build time via `generateStaticParams()`, with the entity's data (name, effects / matching ingredients) rendered into the initial HTML and a unique `<title>` + meta description per page. Each targets searches like "skyrim blue mountain flower" or "skyrim restore health ingredients." Multi-ingredient combos are **not** pre-rendered — the permutation space is too large — so they are client-only and not indexed; their purpose is only bookmarking and sharing.
+| `seg` pattern | Meaning | Rendering |
+|---------------|---------|-----------|
+| No `+`, matches an ingredient slug | Tool pre-loaded with that ingredient | Static, indexed |
+| No `+`, matches an effect slug | Tool pre-loaded with that effect | Static, indexed |
+| Contains `+`, valid 2-ingredient combo | Brew result for this pair | Static, indexed |
+| Contains `+`, valid 3-ingredient combo (strict) | Brew result for this triple | Static, indexed |
+| Contains `+`, not a valid combo | Tool pre-loaded in selection (user-composed) | Client-side, not indexed |
 
-**⚠️ Slug-uniqueness requirement:** because ingredients and effects share the single-slug namespace, **no ingredient slug may equal an effect slug.** A build-time assertion validates that the combined ingredient + effect slug space is unique and **fails the build** on any collision (guarding against future AE/data additions introducing a clash that would otherwise silently shadow one entity).
+**What counts as a valid combo:**
+- **2-ingredient:** the pair shares at least one effect → produces a potion
+- **3-ingredient (strict):** every ingredient contributes at least one effect to the final potion — no dead-weight third ingredient. This filters out triples that are technically "valid" but where removing the third ingredient would yield the same potion.
 
-**URL conventions**
-- All slugs are lowercase, hyphen-separated, ASCII only. Apostrophes and special characters are stripped (e.g. *Hagraven's Claw* → `hagravens-claw`, *Daedra Heart* → `daedra-heart`).
-- The tool lives at `/alchemy` (matches the in-game skill name — a strong search keyword) but is branded "Potion Mixer" in the UI.
+**Combo page count and the triple gate:**
+The real number of valid strict triples is unknown until the ingredient data is built. Before enabling triple pre-rendering, run a count script against the data:
+- If the strict-triple count is **under ~5,000** → pre-render all of them.
+- If it is **5,000–20,000** → review page quality; consider narrowing the definition further.
+- If it exceeds **20,000** → keep triples client-side only; too many thin pages risks SEO penalties and blows the build budget.
 
-**Shareable / combo URLs:** a multi-ingredient selection is encoded as a **canonical, alphabetically-sorted, `+`-joined** list of slugs, so the same set always produces the same URL:
-```
-/alchemy/lavender+wheat
-/alchemy/blue-mountain-flower+garlic+wheat
-```
-The tool reads the `[seg]` segment on load to restore the selection, and writes the canonical sorted form to the URL as the selection changes.
+**Static, indexable pages:** every pre-rendered `/alchemy/[seg]` page gets unique `<title>` + meta description rendered into the initial HTML, targeting searches like "skyrim blue mountain flower", "skyrim restore health ingredients", or "skyrim blue mountain flower wheat potion".
 
-**Discovery:** a generated `sitemap.xml` lists every pre-rendered `/alchemy/[slug]` page. The static `/ingredients` and `/effects` index pages also link to them, aiding crawl discovery (client-rendered links inside the tool are weaker for crawlers) and giving human visitors a plain browseable list.
+**Slug conventions:**
+- Lowercase, hyphen-separated, ASCII only. Apostrophes and special characters are stripped (e.g. *Hagraven's Claw* → `hagravens-claw`).
+- Combo slugs are alphabetically sorted and `+`-joined so the same selection always produces the same URL — no duplicates.
+- Ingredient and effect slugs share one namespace. A routine build assertion checks for collisions and fails the build if any are found (a free guard against future data additions).
+
+**`/alchemy/potions` index:** a static page listing all valid potion combinations grouped by the shared effect(s) they produce. High SEO value — targets "skyrim [effect name] potion ingredients" searches. Links directly to the individual combo pages. Equivalent to the wiki's potion list but faster and filterable.
+
+**Discovery:** a generated `sitemap.xml` lists every pre-rendered page. The `/ingredients` and `/effects` index pages also link into `/alchemy/[slug]`, giving crawlers a reliable non-JS path to discover single-entity pages.
 
 ---
 
