@@ -76,7 +76,7 @@ function EffectGroup({
                   }}
                 />
                 <a
-                  href={`/skyrim/alchemy/${effect.id}`}
+                  href={`/alchemy/${effect.id}`}
                   className="font-medium text-sm text-[var(--text)] hover:text-[var(--accent)] transition-colors"
                 >
                   {effect.name}
@@ -89,7 +89,7 @@ function EffectGroup({
                 {ings.map((ing, idx) => (
                   <span key={ing.id}>
                     <a
-                      href={`/skyrim/alchemy/${ing.id}`}
+                      href={`/alchemy/${ing.id}`}
                       className="hover:text-[var(--text)] transition-colors"
                     >
                       {ing.name}
