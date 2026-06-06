@@ -415,13 +415,14 @@ To ship something useful quickly, the MVP is:
 - [ ] Bidirectional filtering: ingredient→effects and effect→ingredients
 - [ ] Multi-effect grouped ingredient list (matches both / each effect)
 - [ ] 3-ingredient cap with disabled state; deselection; clear-all reset
+- [ ] Shareable selection URLs (`/alchemy/[combo]`, sorted, `+`-joined) — read on load, write on change
 - [ ] Inline filter bar: plantable toggle, effect type, hide mixed results
 - [ ] Settings modal: DLC content flags, perk selections, theme selector
 - [ ] Tailwind theme setup: Nordic Dark + Parchment + System via CSS variables
 - [ ] Homepage with navigation cards
 - [ ] GitHub Actions deploy to GitHub Pages
 
-**Out of scope for MVP:** value estimation, shareable URLs, standalone ingredient detail pages, location hints (added post-MVP via UESP scrape).
+**Out of scope for MVP:** value estimation, standalone ingredient/effect detail pages (`/ingredients/[slug]`, `/effects/[slug]`), location hints (added post-MVP via UESP scrape).
 
 ---
 
