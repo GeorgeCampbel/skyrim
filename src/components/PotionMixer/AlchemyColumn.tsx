@@ -163,7 +163,7 @@ export function EffectColumn({
         badge={
           <span
             className={[
-              "text-xs w-1.5 h-1.5 rounded-full shrink-0 inline-block",
+              "w-2 h-2 rounded-full shrink-0 inline-block",
               eff.type === "beneficial"
                 ? "bg-[var(--beneficial)]"
                 : "bg-[var(--harmful)]",
