@@ -24,6 +24,7 @@ export default function RootLayout({
             <div className="flex items-center gap-3">
               <nav className="flex gap-4 text-sm text-[var(--text-muted)]">
                 <a href="/skyrim/alchemy" className="hover:text-[var(--text)] transition-colors">Alchemy</a>
+                <a href="/skyrim/alchemy/potions" className="hover:text-[var(--text)] transition-colors">Potions</a>
               </nav>
               <SettingsModal />
             </div>
