@@ -421,7 +421,7 @@ If user accounts, saved builds, or community recipes are added later:
 | 6 | **Shareable URLs** | ✅ Decided | Unified `/alchemy/[seg]` namespace: single ingredient/effect pre-rendered & indexable; multi-ingredient combos client-side only. `+`-joined, sorted, canonical. Build-time slug-uniqueness check. See §4.4. |
 | 7 | **Max combinations shown** | ✅ Decided | No cap — results are naturally bounded by ingredient selection and filters. |
 | 8 | **Testing strategy** | ✅ Decided | Vitest unit tests for `alchemy.ts` and `value.ts` only. No UI tests. |
-| 9 | **Custom domain** | Open | Start with `georgecampbel.github.io/skyrim`. Easy to add a domain later. |
+| 9 | **Custom domain** | ✅ Decided | Stay on `georgecampbel.github.io/skyrim` for now. |
 
 ---
 
