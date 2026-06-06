@@ -346,8 +346,10 @@ To ship something useful quickly, the MVP is:
 
 | Tool | Description |
 |------|-------------|
-| Enchanting Calculator | Select soul gem size + enchanting skill + perks → enchantment magnitude and value |
-| Perk Planner | Visual perk tree, mark which perks you have, plan a build |
-| Smithing Calculator | Material + skill + perks → armor/weapon stats |
-| Merchant Restock Tracker | Note which merchants have been visited and when they restock |
-| Build Saver | Save a named character build (race, perks, skills, gear) — requires backend |
+| **Enchanting Calculator** | Pick enchantment + soul gem + skill level + perks → effect strength and estimated value. Mirrors the potion tool. |
+| **Trainer Finder** | Select a skill, see every trainer in the game: their level cap, location, hold, and any prerequisite quest. Filterable and faster than any wiki table. |
+| **Standing Stones Reference** | All 13 stones with their effects, location by hold, and a brief note on which builds benefit most. Simple but much easier to digest than the wiki. |
+| **Shout / Word Wall Tracker** | All 20 shouts listed with their 3 word locations. Check off words as you find them — progress saved to localStorage. |
+| **Missable Content Checklist** | Quests, items, and dialogue that can be permanently locked out, with the exact conditions explained. Checkable, saved to localStorage. |
+| **Skill Book Finder** | Every skill book in the game, filterable by skill. Mark books as read — saved to localStorage. |
+| **Character Generator** | Shuffle/roll to get a randomised character concept: race, archetype (e.g. "Spellsword", "Stealth Archer", "Druid"), primary skill focus, and a short flavour blurb with starting suggestions. Rerollable by category so you can lock a race you like and randomise the rest. |
