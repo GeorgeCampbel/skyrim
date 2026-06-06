@@ -114,7 +114,7 @@ The reverse case — multiple *ingredients* selected showing their combined effe
 }
 ```
 
-**Note on Anniversary Edition content:** AE bundles ~26 Creation Club packs. The most alchemy-relevant is *Rare Curios*, which adds ~40 ingredients from Morrowind and Oblivion (Bonemeal, Saltrice, Marshmerrow, etc.). All AE ingredients share `source: "anniversary"` and are hidden unless the user enables AE in settings.
+**Note on Anniversary Edition content:** AE bundles ~26 Creation Club packs. The most alchemy-relevant is *Rare Curios*, which adds ~40 ingredients from Morrowind and Oblivion (Bonemeal, Saltrice, Marshmerrow, etc.).
 
 #### Effect
 ```
