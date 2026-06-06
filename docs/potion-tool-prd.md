@@ -204,7 +204,7 @@ This is a guide value, not exact — display as "~450 gold" to set expectations.
 
 These are worth discussing before building:
 
-1. **Shareable URLs** — The potion tool's current selection is encoded as a clean route, not query params, so it can be bookmarked, shared, and indexed. E.g. `/potions/brew/blue-mountain-flower+wheat+lavender`. Static ingredient and effect pages (`/ingredients/[slug]`, `/effects/[slug]`) are pre-rendered at build time and fully indexable.
+1. **Shareable URLs** — The tool's current selection is encoded as a clean route (canonical, sorted, comma-separated slugs), not query params, so it can be bookmarked and shared. E.g. `/alchemy/blue-mountain-flower,lavender,wheat`. See §4.4 for the full URL scheme. Static ingredient and effect pages (`/ingredients/[slug]`, `/effects/[slug]`) are pre-rendered at build time and fully indexable.
 
 2. **"What's missing" mode** — Given a desired potion effect, show which single ingredient you'd need to add to your current selection to unlock that effect.
 
@@ -271,16 +271,31 @@ Active theme stored in localStorage. Selector in the settings modal.
 
 ### 4.4 Routing & Static Generation
 
+All paths below are relative to the `basePath` (see §4.5 — on github.io the live prefix is `/skyrim`).
+
 ```
 /                               → Homepage (navigation hub)
-/potions                        → Potion Mixer tool (interactive, client component)
+/alchemy                        → Potion Mixer tool (interactive, client component)
+/alchemy/[combo]                → Tool pre-loaded with a shared selection (client route, not pre-rendered)
 /ingredients                    → Ingredient list (static)
 /ingredients/[slug]             → Individual ingredient page (statically generated)
 /effects                        → Effect list (static)
 /effects/[slug]                 → Individual effect page (statically generated)
 ```
 
-Ingredient and effect detail pages are generated from the JSON data files at build time. The potion tool URL can encode selections as a clean path segment for shareability, though dynamic combination paths are not pre-rendered (too many permutations).
+**URL conventions**
+- All slugs are lowercase, hyphen-separated, ASCII only. Apostrophes and special characters are stripped (e.g. *Hagraven's Claw* → `hagravens-claw`, *Daedra Heart* → `daedra-heart`).
+- Collection routes are plural (`/ingredients`); item routes are the singular slug beneath them.
+- The tool lives at `/alchemy` (matches the in-game skill name — a strong search keyword) but is branded "Potion Mixer" in the UI.
+
+**Static, indexable pages** (the SEO workhorses): ingredient and effect detail pages are pre-rendered from the JSON data files at build time via `generateStaticParams()`. Each targets searches like "skyrim blue mountain flower" or "skyrim restore health ingredients."
+
+**Shareable selection URLs** (`/alchemy/[combo]`): a selection is encoded as a **canonical, alphabetically-sorted, comma-separated** list of slugs so the same set of ingredients always produces the same URL:
+```
+/alchemy/lavender,wheat
+/alchemy/blue-mountain-flower,garlic,wheat
+```
+These are client-side routes — the tool reads the `[combo]` segment on load and restores the selection. They are intentionally **not** pre-rendered (the permutation space is too large to statically generate) and therefore not indexed; their only purpose is bookmarking and sharing. Sorting on generation keeps them canonical and avoids duplicate URLs for the same selection.
 
 ---
 
@@ -295,7 +310,20 @@ Next.js static export outputs to `/out`. A GitHub Actions workflow on push to `m
 ```
 
 **URL:** `https://georgecampbel.github.io/skyrim`
-Custom domain can be added at any time — GitHub Pages supports it with free HTTPS via Let's Encrypt.
+
+**Base path:** Because this is a project page served under the `/skyrim` subpath, Next.js must be configured with `basePath: '/skyrim'` and `assetPrefix` to match, so routes and static assets resolve correctly. All in-app links should be root-relative and let Next.js prepend the base path rather than hardcoding `/skyrim`.
+
+```ts
+// next.config.ts
+const nextConfig = {
+  output: 'export',
+  basePath: '/skyrim',
+  images: { unoptimized: true },  // required: next/image optimizer needs a server
+  trailingSlash: true,
+}
+```
+
+**Custom domain (future):** A custom domain can be added at any time — GitHub Pages supports it with free HTTPS via Let's Encrypt. Moving to a root domain would mean dropping `basePath`, so keeping links base-path-relative now makes that migration painless.
 
 **Free tier limits** (not a concern for this project):
 - 1GB repo size soft limit
