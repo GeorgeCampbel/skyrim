@@ -37,20 +37,66 @@ Skyrim alchemy works as follows:
 - A potion gains an effect only if **at least 2 of the chosen ingredients share that effect**
 - More ingredient overlap = more effects on the resulting potion
 
-### 3.2 Two Entry Modes
+### 3.2 Interaction Model — Linked Two-Column Layout
 
-**Mode A — "I have these ingredients"**
-- User selects ingredients they have on hand (multi-select, searchable)
-- App shows all valid potions that can be brewed from any 2–3 of the selected ingredients
-- Results list each combination with the effects it would produce
-- Sort options: by number of effects, by estimated value (if skill/perks are set), alphabetically
+The tool has no mode toggle. Instead, two linked columns sit side by side: **Ingredients** and **Effects**. You start from whichever side you care about, and the columns filter each other bidirectionally.
 
-**Mode B — "I want this effect"**
-- User selects one or more desired effects from a list
-- App shows all ingredient combinations that would produce those effects together
-- User can add multiple target effects and see combinations that satisfy all of them
+#### Card states
 
-Both modes should be accessible from the same page — a toggle or tab at the top, not separate routes.
+Every ingredient and effect is a small clickable card. Cards exist in one of three states, which also determine their position in their column:
+
+| State | Meaning | Position |
+|-------|---------|----------|
+| **Selected** | Actively chosen by the user | Pinned to the top of the column, visually highlighted (active border/background) |
+| **Default** | Compatible with the current selection | Middle of the column, full opacity |
+| **Muted** | Incompatible with the current selection | Bottom of the column, reduced opacity (~40%), still readable |
+
+#### Initial state
+
+On page load, all ingredients and all effects are listed alphabetically in their columns, all in the **default** state. Nothing is muted.
+
+#### Starting from an ingredient
+
+1. Click an ingredient → it becomes **selected** and pins to the top of the Ingredients column. All other ingredients become **muted**.
+2. In the Effects column: the 4 effects of that ingredient stay **default**; all other effects become **muted** and drop down.
+3. Click a desired effect → ingredients sharing that effect with the selection are promoted from muted back to **default**, showing which ingredients combine with the original to make that potion.
+
+#### Starting from an effect
+
+1. Click an effect → it becomes **selected** and pins to the top of the Effects column. All other effects become **muted**.
+2. In the Ingredients column: ingredients that have that effect are promoted to **default** at the top; incompatible ingredients become **muted** and drop to the bottom.
+3. Click ingredients to add them to the potion (up to 3). Each selected ingredient pins to the top of its column.
+4. When one or more ingredients are selected, their *other* effects are promoted from muted into the **default** band beneath the selected effect, so they can be selected too and added to the potion.
+
+#### In short
+
+- **Ingredient selected** → its effects shown, others muted
+- **Effect selected** → its ingredients shown, others muted
+
+#### Constraints & rules
+
+- **Max 3 ingredients.** Once 3 are selected, remaining default ingredients show a clear disabled state (distinct from muted) and cannot be selected until one is removed.
+- **Deselection.** Clicking any selected card deselects it and reverses its filtering effect. Selected cards are visually obvious as toggleable.
+- **Clear all.** A reset control returns the page to the initial all-default state.
+
+#### Multiple effects selected — grouped ingredient list
+
+When 2 effects are selected, the Ingredients column groups its **default** cards by which effect(s) they contribute to, so it's clear which ingredient serves which effect:
+
+```
+── Matches both ──
+  [Wheat]  [Garlic]
+── Restore Health only ──
+  [Blue Mountain Flower]  [Charred Skeever Hide]
+── Fortify Stamina only ──
+  [Large Antlers]  [Lavender]
+```
+
+The **Matches both** group is pinned at the top — these are the best ingredients for a dual-effect potion and directly answer "what should I use." Each ingredient appears in exactly one group (no duplicate cards). Muted (non-matching) ingredients remain at the bottom as usual.
+
+Grouping applies to the 2-effect case. With 3 effects selected the combinatorics get noisy, so the column falls back to a flat "matches at least one" default list rather than many small groups.
+
+The reverse case — multiple *ingredients* selected showing their combined effects — needs no grouping; it simply promotes the union of the selected ingredients' effects into the default band.
 
 ---
 
@@ -259,10 +305,10 @@ Custom domain can be added at any time — GitHub Pages supports it with free HT
 
 ### 4.6 Mobile-First Layout
 
-The site is most likely used on a phone as a second screen while playing. Layout decisions:
+The site is most likely used on a phone as a second screen while playing. The interaction model (§3.2) is two linked columns. Layout decisions:
 
-- On mobile: mode toggle is a full-width segmented control at the top; filter bar collapses to a "Filters" button opening a bottom sheet (shadcn/ui Sheet); results stack as cards
-- On tablet/desktop: filter sidebar appears inline; results display in a grid
+- On tablet/desktop: the Ingredients and Effects columns sit side by side; the filter bar is inline above them.
+- On mobile: two columns don't fit comfortably side by side. The two columns become tabbed (Ingredients / Effects segmented control), with a persistent summary of the current selection visible above the tabs so context isn't lost when switching. The filter bar collapses to a "Filters" button opening a bottom sheet (shadcn/ui Sheet).
 
 ---
 
@@ -337,16 +383,18 @@ If user accounts, saved builds, or community recipes are added later:
 
 To ship something useful quickly, the MVP is:
 
-- [ ] Ingredient + effect data files (base game + 3 DLC)
-- [ ] Mode A: select ingredients → see valid potion combinations
-- [ ] Mode B: select desired effects → see ingredient combinations
+- [ ] Ingredient + effect data files (base game + all DLC incl. Anniversary)
+- [ ] Linked two-column UI with selected / default / muted card states (§3.2)
+- [ ] Bidirectional filtering: ingredient→effects and effect→ingredients
+- [ ] Multi-effect grouped ingredient list (matches both / each effect)
+- [ ] 3-ingredient cap with disabled state; deselection; clear-all reset
 - [ ] Inline filter bar: plantable toggle, effect type, hide mixed results
 - [ ] Settings modal: DLC content flags, perk selections, theme selector
 - [ ] Tailwind theme setup: Nordic Dark + Parchment + System via CSS variables
 - [ ] Homepage with navigation cards
 - [ ] GitHub Actions deploy to GitHub Pages
 
-**Out of scope for MVP:** value estimation, shareable URLs, ingredient detail panel, AE content data, location hints, "what's missing" mode.
+**Out of scope for MVP:** value estimation, shareable URLs, standalone ingredient detail pages, location hints (added post-MVP via UESP scrape).
 
 ---
 
