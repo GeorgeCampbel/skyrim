@@ -204,7 +204,7 @@ This is a guide value, not exact — display as "~450 gold" to set expectations.
 
 These are worth discussing before building:
 
-1. **Shareable URLs** — The tool's current selection is encoded as a clean route (canonical, sorted, comma-separated slugs), not query params, so it can be bookmarked and shared. E.g. `/alchemy/blue-mountain-flower+lavender+wheat`. See §4.4 for the full URL scheme. Static ingredient and effect pages (`/ingredients/[slug]`, `/effects/[slug]`) are pre-rendered at build time and fully indexable.
+1. **Shareable URLs** — The tool's current selection is encoded as a clean route (canonical, sorted, `+`-joined slugs), not query params, so it can be bookmarked and shared. E.g. `/alchemy/blue-mountain-flower+lavender+wheat`. Single ingredients and effects share the same namespace (`/alchemy/wheat`, `/alchemy/restore-health`) and are statically pre-rendered for SEO. See §4.4 for the full URL scheme.
 
 2. **"What's missing" mode** — Given a desired potion effect, show which single ingredient you'd need to add to your current selection to unlock that effect.
 
@@ -275,26 +275,37 @@ All paths below are relative to the `basePath` (see §4.5 — on github.io the l
 
 ```
 /                               → Homepage (navigation hub)
-/alchemy                        → Potion Mixer tool (interactive, client component)
-/alchemy/[combo]                → Tool pre-loaded with a shared selection (client route, not pre-rendered)/ingredients                    → Ingredient list (static)
-/ingredients/[slug]             → Individual ingredient page (statically generated)
-/effects                        → Effect list (static)
-/effects/[slug]                 → Individual effect page (statically generated)
+/alchemy                        → Potion Mixer tool, empty (interactive client component)
+/alchemy/[seg]                  → Tool pre-loaded with a selection (see resolution rules below)
+/ingredients                    → Lightweight static index, links into /alchemy/[slug]
+/effects                        → Lightweight static index, links into /alchemy/[slug]
 ```
+
+There are **no** standalone `/ingredients/[slug]` or `/effects/[slug]` detail pages. A single ingredient or effect *is* the tool pre-loaded with that selection, so both fold into the unified `/alchemy/[seg]` namespace.
+
+**`/alchemy/[seg]` resolution rules**
+- `seg` contains `+` → a list of ingredients (a brew combo), e.g. `/alchemy/wheat+lavender`. Always ingredients-only. **Client-side, not pre-rendered.**
+- `seg` has no `+` → look the slug up in the data:
+  - matches an **ingredient** → tool pre-loaded with that ingredient selected
+  - matches an **effect** → tool pre-loaded with that effect selected
+  - **Statically pre-rendered** (see below).
+
+**Static, indexable pages** (the SEO workhorses): every single ingredient (~170) and single effect (~70) is pre-rendered at build time via `generateStaticParams()`, with the entity's data (name, effects / matching ingredients) rendered into the initial HTML and a unique `<title>` + meta description per page. Each targets searches like "skyrim blue mountain flower" or "skyrim restore health ingredients." Multi-ingredient combos are **not** pre-rendered — the permutation space is too large — so they are client-only and not indexed; their purpose is only bookmarking and sharing.
+
+**⚠️ Slug-uniqueness requirement:** because ingredients and effects share the single-slug namespace, **no ingredient slug may equal an effect slug.** A build-time assertion validates that the combined ingredient + effect slug space is unique and **fails the build** on any collision (guarding against future AE/data additions introducing a clash that would otherwise silently shadow one entity).
 
 **URL conventions**
 - All slugs are lowercase, hyphen-separated, ASCII only. Apostrophes and special characters are stripped (e.g. *Hagraven's Claw* → `hagravens-claw`, *Daedra Heart* → `daedra-heart`).
-- Collection routes are plural (`/ingredients`); item routes are the singular slug beneath them.
 - The tool lives at `/alchemy` (matches the in-game skill name — a strong search keyword) but is branded "Potion Mixer" in the UI.
 
-**Static, indexable pages** (the SEO workhorses): ingredient and effect detail pages are pre-rendered from the JSON data files at build time via `generateStaticParams()`. Each targets searches like "skyrim blue mountain flower" or "skyrim restore health ingredients."
-
-**Shareable selection URLs** (`/alchemy/[combo]`): a selection is encoded as a **canonical, alphabetically-sorted, comma-separated** list of slugs so the same set of ingredients always produces the same URL:
+**Shareable / combo URLs:** a multi-ingredient selection is encoded as a **canonical, alphabetically-sorted, `+`-joined** list of slugs, so the same set always produces the same URL:
 ```
 /alchemy/lavender+wheat
 /alchemy/blue-mountain-flower+garlic+wheat
 ```
-Ingredients are sorted alphabetically and joined with `+`. These are client-side routes — the tool reads the `[combo]` segment on load and restores the selection. They are intentionally **not** pre-rendered (the permutation space is too large to statically generate) and therefore not indexed; their only purpose is bookmarking and sharing. Alphabetical sorting keeps them canonical so the same selection always produces the same URL.
+The tool reads the `[seg]` segment on load to restore the selection, and writes the canonical sorted form to the URL as the selection changes.
+
+**Discovery:** a generated `sitemap.xml` lists every pre-rendered `/alchemy/[slug]` page. The static `/ingredients` and `/effects` index pages also link to them, aiding crawl discovery (client-rendered links inside the tool are weaker for crawlers) and giving human visitors a plain browseable list.
 
 ---
 
@@ -399,7 +410,7 @@ If user accounts, saved builds, or community recipes are added later:
 | 3 | **Mobile vs desktop** | ✅ Decided | Mobile-first. Responsive up to desktop. Filter bar collapses to bottom sheet on small screens. |
 | 4 | **Theming** | ✅ Decided | 3 named themes: Nordic Dark, Parchment, System. CSS variables on `data-theme`. Selector in settings modal. |
 | 5 | **CSS framework** | ✅ Decided | Tailwind CSS v4 + shadcn/ui — see §4.3. |
-| 6 | **Shareable URLs** | ✅ Decided | Clean routes (not query params) for shareability and indexability. Dynamic combination paths are client-side routes; ingredient/effect pages are statically generated. |
+| 6 | **Shareable URLs** | ✅ Decided | Unified `/alchemy/[seg]` namespace: single ingredient/effect pre-rendered & indexable; multi-ingredient combos client-side only. `+`-joined, sorted, canonical. Build-time slug-uniqueness check. See §4.4. |
 | 7 | **Max combinations shown** | ✅ Decided | No cap — results are naturally bounded by ingredient selection and filters. |
 | 8 | **Testing strategy** | ✅ Decided | Vitest unit tests for `alchemy.ts` and `value.ts` only. No UI tests. |
 | 9 | **Custom domain** | Open | Start with `georgecampbel.github.io/skyrim`. Easy to add a domain later. |
@@ -415,14 +426,15 @@ To ship something useful quickly, the MVP is:
 - [ ] Bidirectional filtering: ingredient→effects and effect→ingredients
 - [ ] Multi-effect grouped ingredient list (matches both / each effect)
 - [ ] 3-ingredient cap with disabled state; deselection; clear-all reset
-- [ ] Shareable selection URLs (`/alchemy/[combo]`, sorted, `+`-joined) — read on load, write on change
+- [ ] Shareable selection URLs (`/alchemy/[seg]`, sorted, `+`-joined; resolves single ingredient/effect or combo) — read on load, write on change
+- [ ] Build-time slug-uniqueness assertion across ingredients + effects
 - [ ] Inline filter bar: plantable toggle, effect type, hide mixed results
 - [ ] Settings modal: DLC content flags, perk selections, theme selector
 - [ ] Tailwind theme setup: Nordic Dark + Parchment + System via CSS variables
 - [ ] Homepage with navigation cards
 - [ ] GitHub Actions deploy to GitHub Pages
 
-**Out of scope for MVP:** value estimation, standalone ingredient/effect detail pages (`/ingredients/[slug]`, `/effects/[slug]`), location hints (added post-MVP via UESP scrape).
+**Out of scope for MVP:** value estimation; the SEO static-generation layer (pre-rendering single-slug pages via `generateStaticParams()`, per-page metadata, `sitemap.xml`, and the `/ingredients` + `/effects` index pages); location hints (added post-MVP via UESP scrape). Note: the MVP tool already *handles* `/alchemy/[slug]` selections client-side — the deferred work is the static pre-rendering of those routes for indexing, not the routes themselves.
 
 ---
 
