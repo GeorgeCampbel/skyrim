@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import type { Ingredient, Effect } from "@/src/data/types";
 import {
   EMPTY_SELECTION,
@@ -12,6 +12,7 @@ import {
 import { IngredientColumn, EffectColumn } from "./AlchemyColumn";
 import { SummaryBar } from "./SummaryBar";
 import { FilterBar, DEFAULT_FILTERS, type Filters } from "./FilterBar";
+import { useSettings } from "@/src/components/SettingsProvider";
 
 interface PotionMixerProps {
   ingredients: Ingredient[];
@@ -21,20 +22,84 @@ interface PotionMixerProps {
 
 type MobileTab = "ingredients" | "effects";
 
+function selectionToSlug(sel: AlchemySelection): string {
+  const ids = [...sel.ingredientIds, ...sel.effectIds].sort();
+  return ids.join("+");
+}
+
+function parseSlugToSelection(
+  slug: string,
+  ingredients: Ingredient[],
+  effects: Effect[]
+): AlchemySelection {
+  if (!slug) return EMPTY_SELECTION;
+  const ids = slug.split("+");
+  const ingredientIds: string[] = [];
+  const effectIds: string[] = [];
+  for (const id of ids) {
+    if (ingredients.some((i) => i.id === id)) {
+      ingredientIds.push(id);
+    } else if (effects.some((e) => e.id === id)) {
+      effectIds.push(id);
+    }
+  }
+  return { ingredientIds: ingredientIds.slice(0, 3), effectIds };
+}
+
 export function PotionMixer({
   ingredients,
   effects,
   initialSelection = EMPTY_SELECTION,
 }: PotionMixerProps) {
+  const { settings } = useSettings();
   const [selection, setSelection] = useState<AlchemySelection>(initialSelection);
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
   const [mobileTab, setMobileTab] = useState<MobileTab>("ingredients");
+  const urlInitialized = useRef(false);
+
+  // On mount: read URL pathname (or sessionStorage redirect) and restore selection
+  useEffect(() => {
+    // Restore path saved by 404.html redirect
+    const redirected = sessionStorage.getItem("skyrim-redirect");
+    if (redirected) {
+      sessionStorage.removeItem("skyrim-redirect");
+      window.history.replaceState(null, "", redirected);
+    }
+
+    const pathname = redirected ?? window.location.pathname;
+    const match = pathname.match(/\/alchemy\/([^/]+)\/?$/);
+    if (match) {
+      const parsed = parseSlugToSelection(match[1], ingredients, effects);
+      const hasContent =
+        parsed.ingredientIds.length > 0 || parsed.effectIds.length > 0;
+      if (hasContent) {
+        setSelection(parsed);
+      }
+    }
+    urlInitialized.current = true;
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // On selection change: update URL (skip until URL has been initialized)
+  useEffect(() => {
+    if (!urlInitialized.current) return;
+    const slug = selectionToSlug(selection);
+    const base = "/skyrim/alchemy";
+    const newPath = slug ? `${base}/${slug}` : base;
+    window.history.replaceState(null, "", newPath);
+  }, [selection]);
+
+  const dlcFilteredIngredients = useMemo(() => {
+    return ingredients.filter((i) => {
+      if (i.source === "base") return true;
+      return settings.dlc[i.source as keyof typeof settings.dlc] ?? true;
+    });
+  }, [ingredients, settings.dlc]);
 
   const filteredIngredients = useMemo(() => {
-    let list = ingredients;
+    let list = dlcFilteredIngredients;
     if (filters.plantableOnly) list = list.filter((i) => i.isPlantable);
     return list;
-  }, [ingredients, filters.plantableOnly]);
+  }, [dlcFilteredIngredients, filters.plantableOnly]);
 
   const filteredEffects = useMemo(() => {
     if (filters.effectType === "all") return effects;
@@ -42,8 +107,8 @@ export function PotionMixer({
   }, [effects, filters.effectType]);
 
   const potion = useMemo(
-    () => currentPotion(selection, ingredients, effects),
-    [selection, ingredients, effects]
+    () => currentPotion(selection, dlcFilteredIngredients, effects),
+    [selection, dlcFilteredIngredients, effects]
   );
 
   const visiblePotion = useMemo(() => {
@@ -132,7 +197,7 @@ export function PotionMixer({
           <div style={{ maxHeight: columnHeight }} className="overflow-y-auto pr-1">
             <IngredientColumn
               ingredients={filteredIngredients}
-              allIngredients={ingredients}
+              allIngredients={dlcFilteredIngredients}
               selection={selection}
               onToggleIngredient={handleToggleIngredient}
               allEffects={effects}
@@ -153,7 +218,7 @@ export function PotionMixer({
           <div style={{ maxHeight: columnHeight }} className="overflow-y-auto pr-1">
             <EffectColumn
               effects={filteredEffects}
-              allIngredients={ingredients}
+              allIngredients={dlcFilteredIngredients}
               selection={selection}
               onToggleEffect={handleToggleEffect}
             />
