@@ -96,7 +96,9 @@ Both modes should be accessible from the same page — a toggle or tab at the to
 - Hearthfire: minor (mostly affects `isPlantable` flags on existing ingredients)
 - Anniversary Edition (Rare Curios + others): ~40
 
-**Location hint policy:** Only include hints where we are confident. Use broad descriptors only: hold names, vendor types (apothecary merchants), or environment types (tundra, swamps, caves). Do not include specific spawn coordinates. Omit location data entirely for ingredients where the right answer requires precision — a missing hint is better than a wrong one. This field is populated incrementally and may be empty for rare/AE ingredients in v1.
+**Location data source:** Location hints are fetched from [UESP](https://en.uesp.net) (the most accurate Skyrim wiki) using its MediaWiki API, processed by a one-off Node.js script in `/scripts/fetch-locations.ts`, and committed into `ingredients.json`. This is a build-time data gathering step, not a runtime fetch. UESP content is licensed CC-BY-SA; we store only factual location descriptions, not wiki prose.
+
+**Location hint policy:** Store broad descriptors only — hold names, environment types (tundra, cave, swamp), vendor types (apothecary, general goods). Do not store specific spawn coordinates. If the UESP data for an ingredient is ambiguous or sparse, leave `locationHints: []` — a blank field is better than a wrong one.
 
 ---
 
@@ -105,7 +107,7 @@ Both modes should be accessible from the same page — a toggle or tab at the to
 Filters live in two places:
 
 **Settings modal** (gear icon, persisted to localStorage — set once, forget)
-- Content flags: checkboxes for Dawnguard, Dragonborn, Hearthfire, Anniversary Edition. Base game always on.
+- Content flags: all DLC enabled by default (base game + Dawnguard + Dragonborn + Hearthfire + Anniversary Edition). User unchecks DLC they don't own. Base game cannot be disabled.
 - Alchemy skill level (numeric input, 1–100)
 - Perk selections (see §3.5)
 - Theme selector (see §4.3)
@@ -304,6 +306,8 @@ If user accounts, saved builds, or community recipes are added later:
 │   └── lib/
 │       ├── alchemy.ts                  # potion combination logic
 │       └── value.ts                    # gold value estimation
+├── scripts/
+│   └── fetch-locations.ts              # one-off: fetches location hints from UESP API, writes to ingredients.json
 ├── docs/
 │   └── potion-tool-prd.md
 └── .github/
