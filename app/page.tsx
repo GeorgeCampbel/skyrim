@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const tools = [
   {
-    href: "/skyrim/alchemy",
+    href: "/alchemy",
     title: "Potion Mixer",
     description:
       "Find potions from ingredients you have, or discover which ingredients produce a desired effect.",

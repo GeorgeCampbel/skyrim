@@ -18,13 +18,12 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col">
         <SettingsProvider>
           <header className="border-b border-[var(--border)] px-4 py-3 flex items-center justify-between shrink-0">
-            <a href="/skyrim" className="text-[var(--accent)] font-semibold tracking-wide text-sm uppercase">
+            <a href="/" className="text-[var(--accent)] font-semibold tracking-wide text-sm uppercase">
               Skyrim Tools
             </a>
             <div className="flex items-center gap-3">
               <nav className="flex gap-4 text-sm text-[var(--text-muted)]">
-                <a href="/skyrim/alchemy" className="hover:text-[var(--text)] transition-colors">Alchemy</a>
-                <a href="/skyrim/alchemy/potions" className="hover:text-[var(--text)] transition-colors">Potions</a>
+                <a href="/alchemy" className="hover:text-[var(--text)] transition-colors">Alchemy</a>
               </nav>
               <SettingsModal />
             </div>

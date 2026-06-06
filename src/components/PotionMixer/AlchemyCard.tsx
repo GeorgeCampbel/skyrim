@@ -24,7 +24,7 @@ export function AlchemyCard({
       disabled={disabled}
       className={[
         "w-full text-left px-3 py-2 rounded-md border text-sm transition-all duration-150",
-        "flex items-center justify-between gap-2",
+        "flex items-center gap-2",
         isSelected &&
           "border-[var(--card-selected-border)] bg-[var(--card-selected-bg)] text-[var(--accent)] font-medium shadow-sm",
         !isSelected &&
@@ -38,10 +38,10 @@ export function AlchemyCard({
         .join(" ")}
       style={isMuted ? { opacity: "var(--card-muted-opacity)" } : undefined}
     >
-      <span className="truncate">{label}</span>
-      {badge && <span className="shrink-0">{badge}</span>}
+      <span className="flex-1 min-w-0 truncate">{label}</span>
+      {badge && <span className="shrink-0 flex items-center">{badge}</span>}
       {isSelected && (
-        <span className="shrink-0 text-[var(--accent)] opacity-70">✓</span>
+        <span className="shrink-0 text-[var(--accent)] opacity-70 leading-none">✓</span>
       )}
     </button>
   );
