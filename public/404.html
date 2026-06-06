@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Skyrim Tools</title>
+  <script>
+    // GitHub Pages 404 redirect trick: store the intended path in sessionStorage,
+    // then redirect to the root so the SPA can restore it.
+    var path = window.location.pathname;
+    sessionStorage.setItem('skyrim-redirect', path);
+    window.location.replace('/skyrim/alchemy');
+  </script>
+</head>
+<body></body>
+</html>
