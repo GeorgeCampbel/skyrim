@@ -146,6 +146,10 @@ The reverse case — multiple *ingredients* selected showing their combined effe
 
 **Location hint policy:** Store broad descriptors only — hold names, environment types (tundra, cave, swamp), vendor types (apothecary, general goods). Do not store specific spawn coordinates. If the UESP data for an ingredient is ambiguous or sparse, leave `locationHints: []` — a blank field is better than a wrong one.
 
+**Core data accuracy:** The ingredient↔effect mappings are the heart of the tool — an error here produces wrong potions. This data is cross-checked against UESP and the in-game values, and the `alchemy.ts` logic is unit-tested against a handful of known-correct potions (e.g. Blue Mountain Flower + Wheat → Restore Health) to catch data-entry mistakes. Each ingredient must have exactly 4 effects; a build/test assertion enforces this.
+
+**Attribution:** Location data is derived from UESP (CC-BY-SA). A short attribution line in the site footer credits UESP and links back, satisfying the licence.
+
 ---
 
 ### 3.4 Filters & Settings
@@ -200,21 +204,21 @@ This is a guide value, not exact — display as "~450 gold" to set expectations.
 
 ---
 
-### 3.7 Suggested Additional Features
+### 3.7 Additional Features
 
-These are worth discussing before building:
+**In MVP** (detailed elsewhere, listed here for completeness):
+- **Shareable URLs** — selection encoded as a clean route (canonical, sorted, `+`-joined slugs), e.g. `/alchemy/blue-mountain-flower+lavender+wheat`. See §4.4.
+- **Conflict highlighter** — a potion with both beneficial and harmful effects is visually flagged; supports the "hide mixed-effect results" filter and the Purity decision (§3.4).
 
-1. **Shareable URLs** — The tool's current selection is encoded as a clean route (canonical, sorted, `+`-joined slugs), not query params, so it can be bookmarked and shared. E.g. `/alchemy/blue-mountain-flower+lavender+wheat`. Single ingredients and effects share the same namespace (`/alchemy/wheat`, `/alchemy/restore-health`) and are statically pre-rendered for SEO. See §4.4 for the full URL scheme.
+**Post-MVP enhancements:**
 
-2. **"What's missing" mode** — Given a desired potion effect, show which single ingredient you'd need to add to your current selection to unlock that effect.
+1. **Ingredient detail content** — the pre-rendered `/alchemy/[slug]` page surfaces all 4 effects, source DLC, plantable status, and location hints (once the UESP scrape lands).
 
-3. **Ingredient detail panel** — Click any ingredient to see all 4 effects, its source DLC, whether it's plantable, and a brief location hint (e.g. "common in The Rift, sold by apothecaries").
+2. **Result export / shopping list** — "copy to clipboard" of a recipe or the ingredients needed, useful for noting what to farm.
 
-4. **Conflict highlighter** — When a potion would have both beneficial and harmful effects, visually flag it. Relevant for deciding whether to use Purity.
+3. **Leveling math** — show how much Alchemy XP a given potion grants toward the next skill level.
 
-5. **Result export / shopping list** — A simple "copy to clipboard" of the recipe list, useful for noting what to farm.
-
-6. **Alchemy skill input for leveling math** — Show how much XP a given potion grants toward the next skill level. Nice-to-have, not MVP.
+> The earlier "what's missing" idea (find the one ingredient to add for a target effect) is now folded into the core interaction model (§3.2) rather than a separate feature: selecting an effect already surfaces every compatible ingredient.
 
 ---
 
@@ -237,17 +241,9 @@ No backend. All data is static JSON. No API routes, no server-side rendering at 
 
 ### 4.2 Why Next.js over plain Vite
 
-The key requirement is **Google-indexable pages** for each ingredient and effect. Next.js App Router with static export achieves this: ingredient and effect pages are pre-rendered to HTML at build time via `generateStaticParams()`, so crawlers see real content without executing JavaScript.
+The key requirement is **Google-indexable pages** for ingredients, effects, and valid potion combinations. Next.js App Router with static export achieves this: these pages are pre-rendered to HTML at build time via `generateStaticParams()`, so crawlers see real content without executing JavaScript.
 
-The potion tool itself (`/potions`) is a Client Component (`'use client'`) — fully interactive React, just not pre-rendered beyond the shell.
-
-```ts
-// next.config.ts
-const nextConfig = {
-  output: 'export',   // produces /out as pure static HTML/CSS/JS
-  trailingSlash: true,
-}
-```
+The potion tool itself (`/alchemy`) is a Client Component (`'use client'`) — fully interactive React. Pre-rendered `/alchemy/[seg]` routes ship real content in their initial HTML and then hydrate the live tool on top. (See §4.5 for the canonical `next.config.ts`, including `basePath`.)
 
 ---
 
@@ -373,16 +369,17 @@ If user accounts, saved builds, or community recipes are added later:
 /
 ├── app/
 │   ├── page.tsx                        # Homepage
-│   ├── potions/
-│   │   └── page.tsx                    # Potion Mixer (client component)
+│   ├── alchemy/
+│   │   ├── page.tsx                    # Potion Mixer tool, empty (client component)
+│   │   ├── [seg]/
+│   │   │   └── page.tsx                # Pre-loaded selection; generateStaticParams over
+│   │   │                               #   single ingredients/effects + valid combos
+│   │   └── potions/
+│   │       └── page.tsx                # Valid-potions index, grouped by effect (static)
 │   ├── ingredients/
-│   │   ├── page.tsx                    # Ingredient list
-│   │   └── [slug]/
-│   │       └── page.tsx                # Individual ingredient (static)
+│   │   └── page.tsx                    # Lightweight static index → links into /alchemy/[slug]
 │   └── effects/
-│       ├── page.tsx                    # Effect list
-│       └── [slug]/
-│           └── page.tsx                # Individual effect (static)
+│       └── page.tsx                    # Lightweight static index → links into /alchemy/[slug]
 ├── src/
 │   ├── data/
 │   │   ├── ingredients.json
@@ -396,10 +393,13 @@ If user accounts, saved builds, or community recipes are added later:
 │   │   ├── ResultList/
 │   │   └── SettingsModal/
 │   └── lib/
-│       ├── alchemy.ts                  # potion combination logic
-│       └── value.ts                    # gold value estimation
+│       ├── alchemy.ts                  # potion combination logic (effect intersection, valid-combo enumeration)
+│       ├── value.ts                    # gold value estimation
+│       └── slug.ts                     # slug ↔ entity resolution, combo parse/serialize
 ├── scripts/
-│   └── fetch-locations.ts              # one-off: fetches location hints from UESP API, writes to ingredients.json
+│   ├── fetch-locations.ts              # one-off: fetches location hints from UESP API → ingredients.json
+│   ├── count-combos.ts                 # counts valid pairs/strict triples to gate triple pre-rendering
+│   └── check-slugs.ts                  # build assertion: ingredient + effect slug space is unique
 ├── docs/
 │   └── potion-tool-prd.md
 └── .github/
@@ -413,7 +413,7 @@ If user accounts, saved builds, or community recipes are added later:
 
 | # | Question | Status | Decision |
 |---|----------|--------|----------|
-| 1 | **DLC scope** | ✅ Decided | Base + Dawnguard + Dragonborn + Hearthfire always available. Anniversary Edition as an opt-in flag in settings modal. |
+| 1 | **DLC scope** | ✅ Decided | All content (base + all DLC incl. Anniversary Edition) shown by default. User unchecks DLC they don't own in the settings modal. Base game cannot be disabled. |
 | 2 | **Location data** | ✅ Decided | Include broad hints (hold, environment, vendor type) where confident. Omit rather than guess. Added incrementally post-MVP. |
 | 3 | **Mobile vs desktop** | ✅ Decided | Mobile-first. Responsive up to desktop. Filter bar collapses to bottom sheet on small screens. |
 | 4 | **Theming** | ✅ Decided | 3 named themes: Nordic Dark, Parchment, System. CSS variables on `data-theme`. Selector in settings modal. |
