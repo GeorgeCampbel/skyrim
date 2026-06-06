@@ -17,9 +17,13 @@ A personal-use web reference site for Skyrim (Special Edition + all DLC). The go
 - **Potion Mixer** — the focus of this PRD
 
 ### Planned future tools (not in scope for v1)
-- Enchanting calculator (soul gem + skill + perks → enchantment strength)
-- Perk planner / build planner
-- Item value / weight calculator
+- Enchanting Calculator
+- Trainer Finder
+- Standing Stones Reference
+- Shout / Word Wall Tracker
+- Missable Content Checklist
+- Skill Book Finder
+- Character Generator
 
 ---
 
