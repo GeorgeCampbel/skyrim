@@ -60,7 +60,6 @@ export function PotionMixer({
 
   // On mount: read URL pathname (or sessionStorage redirect) and restore selection
   useEffect(() => {
-    // Restore path saved by 404.html redirect
     const redirected = sessionStorage.getItem("skyrim-redirect");
     if (redirected) {
       sessionStorage.removeItem("skyrim-redirect");
@@ -107,7 +106,10 @@ export function PotionMixer({
   }, [dlcFilteredIngredients, filters.plantableOnly, search]);
 
   const filteredEffects = useMemo(() => {
-    let list = filters.effectType === "all" ? effects : effects.filter((e) => e.type === filters.effectType);
+    let list =
+      filters.effectType === "all"
+        ? effects
+        : effects.filter((e) => e.type === filters.effectType);
     if (search.trim()) {
       const q = search.trim().toLowerCase();
       list = list.filter((e) => e.name.toLowerCase().includes(q));
@@ -129,10 +131,12 @@ export function PotionMixer({
 
   function handleToggleIngredient(id: string) {
     setSelection((s) => toggleIngredient(s, id));
+    setSearch("");
   }
 
   function handleToggleEffect(id: string) {
     setSelection((s) => toggleEffect(s, id));
+    setSearch("");
   }
 
   function handleClear() {
@@ -146,7 +150,6 @@ export function PotionMixer({
 
   return (
     <div className="flex flex-col gap-3 w-full">
-      {/* Filter bar */}
       <FilterBar
         filters={filters}
         onChange={setFilters}
@@ -156,7 +159,6 @@ export function PotionMixer({
         onSearchChange={setSearch}
       />
 
-      {/* Summary bar — appears when valid potion exists */}
       {visiblePotion && (
         <SummaryBar
           ingredients={visiblePotion.ingredients}
@@ -247,4 +249,3 @@ function ColumnHeader({ children }: { children: React.ReactNode }) {
     </h2>
   );
 }
-
