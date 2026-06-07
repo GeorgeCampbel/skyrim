@@ -55,8 +55,7 @@ export function PotionMixer({
   const [selection, setSelection] = useState<AlchemySelection>(initialSelection);
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
   const [mobileTab, setMobileTab] = useState<MobileTab>("ingredients");
-  const [ingredientSearch, setIngredientSearch] = useState("");
-  const [effectSearch, setEffectSearch] = useState("");
+  const [search, setSearch] = useState("");
   const urlInitialized = useRef(false);
 
   // On mount: read URL pathname (or sessionStorage redirect) and restore selection
@@ -100,21 +99,21 @@ export function PotionMixer({
   const filteredIngredients = useMemo(() => {
     let list = dlcFilteredIngredients;
     if (filters.plantableOnly) list = list.filter((i) => i.isPlantable);
-    if (ingredientSearch.trim()) {
-      const q = ingredientSearch.trim().toLowerCase();
+    if (search.trim()) {
+      const q = search.trim().toLowerCase();
       list = list.filter((i) => i.name.toLowerCase().includes(q));
     }
     return list;
-  }, [dlcFilteredIngredients, filters.plantableOnly, ingredientSearch]);
+  }, [dlcFilteredIngredients, filters.plantableOnly, search]);
 
   const filteredEffects = useMemo(() => {
     let list = filters.effectType === "all" ? effects : effects.filter((e) => e.type === filters.effectType);
-    if (effectSearch.trim()) {
-      const q = effectSearch.trim().toLowerCase();
+    if (search.trim()) {
+      const q = search.trim().toLowerCase();
       list = list.filter((e) => e.name.toLowerCase().includes(q));
     }
     return list;
-  }, [effects, filters.effectType, effectSearch]);
+  }, [effects, filters.effectType, search]);
 
   const potion = useMemo(
     () => currentPotion(selection, dlcFilteredIngredients, effects),
@@ -153,6 +152,8 @@ export function PotionMixer({
         onChange={setFilters}
         onClear={handleClear}
         hasSelection={hasSelection}
+        search={search}
+        onSearchChange={setSearch}
       />
 
       {/* Summary bar — appears when valid potion exists */}
@@ -261,6 +262,7 @@ function ColumnHeader({ children }: { children: React.ReactNode }) {
   );
 }
 
+<<<<<<< HEAD
 function SearchInput({
   value,
   onChange,
@@ -293,3 +295,5 @@ function SearchInput({
     </div>
   );
 }
+=======
+>>>>>>> 31c4b38 (Consolidate search into single inline bar, fix double-X clear button)
