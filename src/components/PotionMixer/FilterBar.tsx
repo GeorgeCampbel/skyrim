@@ -17,11 +17,13 @@ interface FilterBarProps {
   onChange: (f: Filters) => void;
   onClear: () => void;
   hasSelection: boolean;
+  search: string;
+  onSearchChange: (v: string) => void;
 }
 
-export function FilterBar({ filters, onChange, onClear, hasSelection }: FilterBarProps) {
+export function FilterBar({ filters, onChange, onClear, hasSelection, search, onSearchChange }: FilterBarProps) {
   return (
-    <div className="flex flex-wrap items-center gap-3 text-sm">
+    <div className="flex flex-wrap items-center gap-2 text-sm">
       <ToggleChip
         active={filters.plantableOnly}
         onClick={() => onChange({ ...filters, plantableOnly: !filters.plantableOnly })}
@@ -53,10 +55,31 @@ export function FilterBar({ filters, onChange, onClear, hasSelection }: FilterBa
         Hide mixed
       </ToggleChip>
 
+      <div className="relative flex-1 min-w-[140px]">
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => onSearchChange(e.target.value)}
+          placeholder="Search…"
+          className="w-full px-2.5 py-1 text-xs rounded-md border border-[var(--border)]
+            bg-[var(--bg-elevated)] text-[var(--text)] placeholder:text-[var(--text-faint)]
+            focus:outline-none focus:border-[var(--accent)] transition-colors"
+        />
+        {search && (
+          <button
+            onClick={() => onSearchChange("")}
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-[var(--text-faint)] hover:text-[var(--text-muted)] transition-colors leading-none"
+            aria-label="Clear search"
+          >
+            ✕
+          </button>
+        )}
+      </div>
+
       {hasSelection && (
         <button
           onClick={onClear}
-          className="ml-auto text-xs text-[var(--text-muted)] hover:text-[var(--text)] transition-colors underline"
+          className="text-xs text-[var(--text-muted)] hover:text-[var(--text)] transition-colors underline whitespace-nowrap"
         >
           Reset all
         </button>
