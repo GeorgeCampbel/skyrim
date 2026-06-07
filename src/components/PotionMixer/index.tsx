@@ -55,6 +55,8 @@ export function PotionMixer({
   const [selection, setSelection] = useState<AlchemySelection>(initialSelection);
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
   const [mobileTab, setMobileTab] = useState<MobileTab>("ingredients");
+  const [ingredientSearch, setIngredientSearch] = useState("");
+  const [effectSearch, setEffectSearch] = useState("");
   const urlInitialized = useRef(false);
 
   // On mount: read URL pathname (or sessionStorage redirect) and restore selection
@@ -98,13 +100,21 @@ export function PotionMixer({
   const filteredIngredients = useMemo(() => {
     let list = dlcFilteredIngredients;
     if (filters.plantableOnly) list = list.filter((i) => i.isPlantable);
+    if (ingredientSearch.trim()) {
+      const q = ingredientSearch.trim().toLowerCase();
+      list = list.filter((i) => i.name.toLowerCase().includes(q));
+    }
     return list;
-  }, [dlcFilteredIngredients, filters.plantableOnly]);
+  }, [dlcFilteredIngredients, filters.plantableOnly, ingredientSearch]);
 
   const filteredEffects = useMemo(() => {
-    if (filters.effectType === "all") return effects;
-    return effects.filter((e) => e.type === filters.effectType);
-  }, [effects, filters.effectType]);
+    let list = filters.effectType === "all" ? effects : effects.filter((e) => e.type === filters.effectType);
+    if (effectSearch.trim()) {
+      const q = effectSearch.trim().toLowerCase();
+      list = list.filter((e) => e.name.toLowerCase().includes(q));
+    }
+    return list;
+  }, [effects, filters.effectType, effectSearch]);
 
   const potion = useMemo(
     () => currentPotion(selection, dlcFilteredIngredients, effects),
@@ -186,14 +196,21 @@ export function PotionMixer({
       <div className="grid md:grid-cols-2 gap-4">
         {/* Ingredients column */}
         <div className={mobileTab !== "ingredients" ? "hidden md:flex flex-col gap-2" : "flex flex-col gap-2"}>
-          <ColumnHeader>
-            Ingredients
-            {selection.ingredientIds.length > 0 && (
-              <span className="text-[var(--accent)] text-xs font-normal ml-1">
-                {selection.ingredientIds.length}/3 selected
-              </span>
-            )}
-          </ColumnHeader>
+          <div className="flex items-center justify-between">
+            <ColumnHeader>
+              Ingredients
+              {selection.ingredientIds.length > 0 && (
+                <span className="text-[var(--accent)] text-xs font-normal ml-1">
+                  {selection.ingredientIds.length}/3 selected
+                </span>
+              )}
+            </ColumnHeader>
+          </div>
+          <SearchInput
+            value={ingredientSearch}
+            onChange={setIngredientSearch}
+            placeholder="Filter ingredients…"
+          />
           <div style={{ maxHeight: columnHeight }} className="overflow-y-auto pr-1">
             <IngredientColumn
               ingredients={filteredIngredients}
@@ -207,14 +224,21 @@ export function PotionMixer({
 
         {/* Effects column */}
         <div className={mobileTab !== "effects" ? "hidden md:flex flex-col gap-2" : "flex flex-col gap-2"}>
-          <ColumnHeader>
-            Effects
-            {selection.effectIds.length > 0 && (
-              <span className="text-[var(--accent)] text-xs font-normal ml-1">
-                {selection.effectIds.length} selected
-              </span>
-            )}
-          </ColumnHeader>
+          <div className="flex items-center justify-between">
+            <ColumnHeader>
+              Effects
+              {selection.effectIds.length > 0 && (
+                <span className="text-[var(--accent)] text-xs font-normal ml-1">
+                  {selection.effectIds.length} selected
+                </span>
+              )}
+            </ColumnHeader>
+          </div>
+          <SearchInput
+            value={effectSearch}
+            onChange={setEffectSearch}
+            placeholder="Filter effects…"
+          />
           <div style={{ maxHeight: columnHeight }} className="overflow-y-auto pr-1">
             <EffectColumn
               effects={filteredEffects}
@@ -234,5 +258,38 @@ function ColumnHeader({ children }: { children: React.ReactNode }) {
     <h2 className="text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1">
       {children}
     </h2>
+  );
+}
+
+function SearchInput({
+  value,
+  onChange,
+  placeholder,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  placeholder: string;
+}) {
+  return (
+    <div className="relative">
+      <input
+        type="search"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className="w-full px-3 py-1.5 text-sm rounded-md border border-[var(--border)]
+          bg-[var(--bg-elevated)] text-[var(--text)] placeholder:text-[var(--text-faint)]
+          focus:outline-none focus:border-[var(--accent)] transition-colors"
+      />
+      {value && (
+        <button
+          onClick={() => onChange("")}
+          className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[var(--text-faint)] hover:text-[var(--text-muted)] transition-colors text-xs"
+          aria-label="Clear search"
+        >
+          ✕
+        </button>
+      )}
+    </div>
   );
 }

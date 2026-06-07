@@ -111,9 +111,7 @@ export default async function SegPage({
   return (
     <div className="flex-1 px-4 py-6 max-w-5xl mx-auto w-full">
       <div className="mb-5">
-        <h1 className="text-xl font-semibold text-[var(--text)]">
-          Potion Mixer
-        </h1>
+        <h1 className="text-xl font-semibold text-[var(--text)]">Alchemy</h1>
         <p className="text-sm text-[var(--text-muted)] mt-1">
           Select ingredients or effects to find matching potions. Up to 3
           ingredients.

@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   output: "export",
   basePath: "/skyrim",
   images: { unoptimized: true },
-  trailingSlash: true,
+  trailingSlash: false,
 };
 
 export default nextConfig;

@@ -2,873 +2,1627 @@
   {
     "id": "abecean-longfin",
     "name": "Abecean Longfin",
-    "effects": ["weakness-to-frost", "fortify-sneak", "weakness-to-poison", "fortify-restoration"],
+    "effects": [
+      "weakness-to-frost",
+      "fortify-sneak",
+      "weakness-to-poison",
+      "fortify-restoration"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["rivers and lakes", "fish barrels"]
+    "locationHints": [
+      "rivers and lakes",
+      "fish barrels"
+    ]
   },
   {
     "id": "bear-claws",
     "name": "Bear Claws",
-    "effects": ["restore-stamina", "fortify-health", "fortify-one-handed", "damage-magicka-regen"],
+    "effects": [
+      "restore-stamina",
+      "fortify-health",
+      "fortify-one-handed",
+      "damage-magicka-regen"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from bears", "general goods merchants"]
+    "locationHints": [
+      "looted from bears",
+      "general goods merchants"
+    ]
   },
   {
     "id": "bee",
     "name": "Bee",
-    "effects": ["restore-stamina", "ravage-stamina", "regenerate-stamina", "weakness-to-shock"],
+    "effects": [
+      "restore-stamina",
+      "ravage-stamina",
+      "regenerate-stamina",
+      "weakness-to-shock"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["bee hives, Riften area"]
+    "locationHints": [
+      "bee hives, Riften area"
+    ]
   },
   {
     "id": "beehive-husk",
     "name": "Beehive Husk",
-    "effects": ["resist-poison", "fortify-light-armor", "fortify-sneak", "fortify-destruction"],
+    "effects": [
+      "resist-poison",
+      "fortify-light-armor",
+      "fortify-sneak",
+      "fortify-destruction"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["bee hives, Riften area"]
+    "locationHints": [
+      "bee hives, Riften area"
+    ]
   },
   {
     "id": "bleeding-crown",
     "name": "Bleeding Crown",
-    "effects": ["weakness-to-fire", "fortify-block", "weakness-to-poison", "resist-magic"],
+    "effects": [
+      "weakness-to-fire",
+      "fortify-block",
+      "weakness-to-poison",
+      "resist-magic"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["caves and dungeons throughout Skyrim"]
+    "locationHints": [
+      "caves and dungeons throughout Skyrim"
+    ]
   },
   {
     "id": "blisterwort",
     "name": "Blisterwort",
-    "effects": ["damage-stamina", "frenzy", "restore-health", "fortify-smithing"],
+    "effects": [
+      "damage-stamina",
+      "frenzy",
+      "restore-health",
+      "fortify-smithing"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["caves throughout Skyrim"]
+    "locationHints": [
+      "caves throughout Skyrim"
+    ]
   },
   {
     "id": "blue-butterfly-wing",
     "name": "Blue Butterfly Wing",
-    "effects": ["damage-stamina", "fortify-conjuration", "damage-magicka-regen", "fortify-enchanting"],
+    "effects": [
+      "damage-stamina",
+      "fortify-conjuration",
+      "damage-magicka-regen",
+      "fortify-enchanting"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["caught from blue butterflies, tundra and plains"]
+    "locationHints": [
+      "caught from blue butterflies, tundra and plains"
+    ]
   },
   {
     "id": "blue-dartwing",
     "name": "Blue Dartwing",
-    "effects": ["resist-shock", "fortify-pickpocket", "restore-health", "fear"],
+    "effects": [
+      "resist-shock",
+      "fortify-pickpocket",
+      "restore-health",
+      "fear"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["caught from dragonflies near water"]
+    "locationHints": [
+      "caught from dragonflies near water"
+    ]
   },
   {
     "id": "blue-mountain-flower",
     "name": "Blue Mountain Flower",
-    "effects": ["restore-health", "fortify-conjuration", "fortify-health", "damage-magicka-regen"],
+    "effects": [
+      "restore-health",
+      "fortify-conjuration",
+      "fortify-health",
+      "damage-magicka-regen"
+    ],
     "source": "base",
     "isPlantable": true,
-    "locationHints": ["tundra and mountain regions, very common throughout Skyrim"]
+    "locationHints": [
+      "tundra and mountain regions, very common throughout Skyrim"
+    ]
   },
   {
     "id": "bone-meal",
     "name": "Bone Meal",
-    "effects": ["damage-stamina", "resist-fire", "fortify-conjuration", "damage-health"],
+    "effects": [
+      "damage-stamina",
+      "resist-fire",
+      "fortify-conjuration",
+      "damage-health"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from draugr and skeletons"]
+    "locationHints": [
+      "looted from draugr and skeletons"
+    ]
   },
   {
     "id": "canis-root",
     "name": "Canis Root",
-    "effects": ["damage-stamina", "fortify-one-handed", "fortify-marksman", "paralysis"],
+    "effects": [
+      "damage-stamina",
+      "fortify-one-handed",
+      "fortify-marksman",
+      "paralysis"
+    ],
     "source": "base",
     "isPlantable": true,
-    "locationHints": ["swamps of Hjaalmarch, Morthal area"]
+    "locationHints": [
+      "swamps of Hjaalmarch, Morthal area"
+    ]
   },
   {
     "id": "charred-skeever-hide",
     "name": "Charred Skeever Hide",
-    "effects": ["restore-stamina", "cure-disease", "resist-poison", "restore-health"],
+    "effects": [
+      "restore-stamina",
+      "cure-disease",
+      "resist-poison",
+      "restore-health"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from skeevers, camps"]
+    "locationHints": [
+      "looted from skeevers, camps"
+    ]
   },
   {
     "id": "chaurus-eggs",
     "name": "Chaurus Eggs",
-    "effects": ["weakness-to-poison", "fortify-stamina", "damage-health", "invisibility"],
+    "effects": [
+      "weakness-to-poison",
+      "fortify-stamina",
+      "damage-health",
+      "invisibility"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["chaurus egg sacs in Falmer-inhabited caves"]
+    "locationHints": [
+      "chaurus egg sacs in Falmer-inhabited caves"
+    ]
   },
   {
     "id": "chickens-egg",
     "name": "Chicken's Egg",
-    "effects": ["resist-magic", "damage-magicka-regen", "waterbreathing", "lingering-damage-stamina"],
+    "effects": [
+      "resist-magic",
+      "damage-magicka-regen",
+      "waterbreathing",
+      "lingering-damage-stamina"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["chicken nests in farms and villages"]
+    "locationHints": [
+      "chicken nests in farms and villages"
+    ]
   },
   {
     "id": "creep-cluster",
     "name": "Creep Cluster",
-    "effects": ["restore-magicka", "damage-stamina-regen", "fortify-carry-weight", "weakness-to-magic"],
+    "effects": [
+      "restore-magicka",
+      "damage-stamina-regen",
+      "fortify-carry-weight",
+      "weakness-to-magic"
+    ],
     "source": "base",
     "isPlantable": true,
-    "locationHints": ["volcanic tundra of Eastmarch, hot springs area"]
+    "locationHints": [
+      "volcanic tundra of Eastmarch, hot springs area"
+    ]
   },
   {
     "id": "crimson-nirnroot",
     "name": "Crimson Nirnroot",
-    "effects": ["damage-health", "damage-stamina", "invisibility", "resist-magic"],
+    "effects": [
+      "damage-health",
+      "damage-stamina",
+      "invisibility",
+      "resist-magic"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["Blackreach only"]
+    "locationHints": [
+      "Blackreach only"
+    ]
   },
   {
     "id": "cyrodilic-spadetail",
     "name": "Cyrodilic Spadetail",
-    "effects": ["damage-stamina", "fear", "restore-health", "fortify-restoration"],
+    "effects": [
+      "damage-stamina",
+      "fear",
+      "restore-health",
+      "fortify-restoration"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["rivers and lakes", "fish barrels"]
+    "locationHints": [
+      "rivers and lakes",
+      "fish barrels"
+    ]
   },
   {
     "id": "daedra-heart",
     "name": "Daedra Heart",
-    "effects": ["restore-health", "damage-stamina-regen", "damage-magicka", "fear"],
+    "effects": [
+      "restore-health",
+      "damage-stamina-regen",
+      "damage-magicka",
+      "fear"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["Daedra enemies, Enthir at the College of Winterhold"]
+    "locationHints": [
+      "Daedra enemies, Enthir at the College of Winterhold"
+    ]
   },
   {
     "id": "deathbell",
     "name": "Deathbell",
-    "effects": ["damage-health", "ravage-stamina", "slow", "weakness-to-poison"],
+    "effects": [
+      "damage-health",
+      "ravage-stamina",
+      "slow",
+      "weakness-to-poison"
+    ],
     "source": "base",
     "isPlantable": true,
-    "locationHints": ["swamps of Hjaalmarch, apothecary merchants"]
+    "locationHints": [
+      "swamps of Hjaalmarch, apothecary merchants"
+    ]
   },
   {
     "id": "dragons-tongue",
     "name": "Dragon's Tongue",
-    "effects": ["resist-fire", "fortify-barter", "fortify-illusion", "fortify-two-handed"],
+    "effects": [
+      "resist-fire",
+      "fortify-barter",
+      "fortify-illusion",
+      "fortify-two-handed"
+    ],
     "source": "base",
     "isPlantable": true,
-    "locationHints": ["volcanic tundra of Eastmarch, hot springs area"]
+    "locationHints": [
+      "volcanic tundra of Eastmarch, hot springs area"
+    ]
   },
   {
     "id": "dwarven-oil",
     "name": "Dwarven Oil",
-    "effects": ["weakness-to-magic", "fortify-illusion", "regenerate-magicka", "restore-magicka"],
+    "effects": [
+      "weakness-to-magic",
+      "fortify-illusion",
+      "regenerate-magicka",
+      "restore-magicka"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["Dwemer ruins"]
+    "locationHints": [
+      "Dwemer ruins"
+    ]
   },
   {
     "id": "ectoplasm",
     "name": "Ectoplasm",
-    "effects": ["restore-magicka", "damage-health", "fortify-destruction", "fortify-magicka"],
+    "effects": [
+      "restore-magicka",
+      "damage-health",
+      "fortify-destruction",
+      "fortify-magicka"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from ghosts"]
+    "locationHints": [
+      "looted from ghosts"
+    ]
   },
   {
     "id": "elves-ear",
     "name": "Elves Ear",
-    "effects": ["restore-magicka", "weakness-to-frost", "fortify-marksman", "resist-fire"],
+    "effects": [
+      "restore-magicka",
+      "weakness-to-frost",
+      "fortify-marksman",
+      "resist-fire"
+    ],
     "source": "base",
     "isPlantable": true,
-    "locationHints": ["coastal areas, apothecary merchants"]
+    "locationHints": [
+      "coastal areas, apothecary merchants"
+    ]
   },
   {
     "id": "eye-of-sabre-cat",
     "name": "Eye of Sabre Cat",
-    "effects": ["restore-stamina", "ravage-health", "damage-magicka", "restore-health"],
+    "effects": [
+      "restore-stamina",
+      "ravage-health",
+      "damage-magicka",
+      "restore-health"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from sabre cats"]
+    "locationHints": [
+      "looted from sabre cats"
+    ]
   },
   {
     "id": "falmer-ear",
     "name": "Falmer Ear",
-    "effects": ["damage-health", "frenzy", "resist-poison", "fortify-lockpicking"],
+    "effects": [
+      "damage-health",
+      "frenzy",
+      "resist-poison",
+      "fortify-lockpicking"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from Falmer"]
+    "locationHints": [
+      "looted from Falmer"
+    ]
   },
   {
     "id": "fire-salts",
     "name": "Fire Salts",
-    "effects": ["weakness-to-frost", "resist-fire", "restore-magicka", "regenerate-magicka"],
+    "effects": [
+      "weakness-to-frost",
+      "resist-fire",
+      "restore-magicka",
+      "regenerate-magicka"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from flame atronachs, general goods merchants"]
+    "locationHints": [
+      "looted from flame atronachs, general goods merchants"
+    ]
   },
   {
     "id": "fly-amanita",
     "name": "Fly Amanita",
-    "effects": ["resist-fire", "fortify-two-handed", "frenzy", "regenerate-stamina"],
+    "effects": [
+      "resist-fire",
+      "fortify-two-handed",
+      "frenzy",
+      "regenerate-stamina"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["caves throughout Skyrim"]
+    "locationHints": [
+      "caves throughout Skyrim"
+    ]
   },
   {
     "id": "frost-mirriam",
     "name": "Frost Mirriam",
-    "effects": ["restore-stamina", "fortify-sneak", "ravage-magicka", "damage-stamina-regen"],
+    "effects": [
+      "restore-stamina",
+      "fortify-sneak",
+      "ravage-magicka",
+      "damage-stamina-regen"
+    ],
     "source": "base",
     "isPlantable": true,
-    "locationHints": ["cold regions, apothecary merchants"]
+    "locationHints": [
+      "cold regions, apothecary merchants"
+    ]
   },
   {
     "id": "frost-salts",
     "name": "Frost Salts",
-    "effects": ["weakness-to-fire", "resist-frost", "restore-magicka", "slow"],
+    "effects": [
+      "weakness-to-fire",
+      "resist-frost",
+      "restore-magicka",
+      "slow"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from frost atronachs, general goods merchants"]
+    "locationHints": [
+      "looted from frost atronachs, general goods merchants"
+    ]
   },
   {
     "id": "garlic",
     "name": "Garlic",
-    "effects": ["resist-poison", "fortify-stamina", "regenerate-health", "regenerate-magicka"],
+    "effects": [
+      "resist-poison",
+      "fortify-stamina",
+      "regenerate-health",
+      "regenerate-magicka"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["very common in homes and inns throughout Skyrim"]
+    "locationHints": [
+      "very common in homes and inns throughout Skyrim"
+    ]
   },
   {
     "id": "giant-lichen",
     "name": "Giant Lichen",
-    "effects": ["weakness-to-shock", "ravage-health", "weakness-to-poison", "restore-magicka"],
+    "effects": [
+      "weakness-to-shock",
+      "ravage-health",
+      "weakness-to-poison",
+      "restore-magicka"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["coastal areas, The Reach"]
+    "locationHints": [
+      "coastal areas, The Reach"
+    ]
   },
   {
     "id": "giants-toe",
     "name": "Giant's Toe",
-    "effects": ["damage-stamina", "fortify-health", "fortify-carry-weight", "lingering-damage-stamina"],
+    "effects": [
+      "damage-stamina",
+      "fortify-health",
+      "fortify-carry-weight",
+      "lingering-damage-stamina"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from giants"]
+    "locationHints": [
+      "looted from giants"
+    ]
   },
   {
     "id": "glowing-mushroom",
     "name": "Glowing Mushroom",
-    "effects": ["resist-shock", "fortify-destruction", "fortify-smithing", "fortify-health"],
+    "effects": [
+      "resist-shock",
+      "fortify-destruction",
+      "fortify-smithing",
+      "fortify-health"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["caves throughout Skyrim"]
+    "locationHints": [
+      "caves throughout Skyrim"
+    ]
   },
   {
     "id": "grass-pod",
     "name": "Grass Pod",
-    "effects": ["resist-poison", "ravage-magicka", "fortify-alteration", "restore-magicka"],
+    "effects": [
+      "resist-poison",
+      "ravage-magicka",
+      "fortify-alteration",
+      "restore-magicka"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["common throughout Skyrim"]
+    "locationHints": [
+      "common throughout Skyrim"
+    ]
   },
   {
     "id": "hanging-moss",
     "name": "Hanging Moss",
-    "effects": ["damage-magicka", "fortify-health", "damage-magicka-regen", "fortify-one-handed"],
+    "effects": [
+      "damage-magicka",
+      "fortify-health",
+      "damage-magicka-regen",
+      "fortify-one-handed"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["caves and ruins, The Reach, Falkreath"]
+    "locationHints": [
+      "caves and ruins, The Reach, Falkreath"
+    ]
   },
   {
     "id": "hagraven-claw",
     "name": "Hagraven Claw",
-    "effects": ["resist-magic", "lingering-damage-health", "fortify-enchanting", "fortify-barter"],
+    "effects": [
+      "resist-magic",
+      "lingering-damage-health",
+      "fortify-enchanting",
+      "fortify-barter"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from hagravens"]
+    "locationHints": [
+      "looted from hagravens"
+    ]
   },
   {
     "id": "hagraven-feathers",
     "name": "Hagraven Feathers",
-    "effects": ["damage-health", "fortify-conjuration", "frenzy", "weakness-to-shock"],
+    "effects": [
+      "damage-health",
+      "fortify-conjuration",
+      "frenzy",
+      "weakness-to-shock"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from hagravens"]
+    "locationHints": [
+      "looted from hagravens"
+    ]
   },
   {
     "id": "hawk-beak",
     "name": "Hawk Beak",
-    "effects": ["restore-stamina", "resist-frost", "fortify-carry-weight", "weakness-to-shock"],
+    "effects": [
+      "restore-stamina",
+      "resist-frost",
+      "fortify-carry-weight",
+      "weakness-to-shock"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from hawks"]
+    "locationHints": [
+      "looted from hawks"
+    ]
   },
   {
     "id": "hawk-feathers",
     "name": "Hawk Feathers",
-    "effects": ["cure-disease", "fortify-light-armor", "fortify-one-handed", "fortify-sneak"],
+    "effects": [
+      "cure-disease",
+      "fortify-light-armor",
+      "fortify-one-handed",
+      "fortify-sneak"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from hawks"]
+    "locationHints": [
+      "looted from hawks"
+    ]
   },
   {
     "id": "histcarp",
     "name": "Histcarp",
-    "effects": ["restore-stamina", "fortify-magicka", "damage-stamina-regen", "waterbreathing"],
+    "effects": [
+      "restore-stamina",
+      "fortify-magicka",
+      "damage-stamina-regen",
+      "waterbreathing"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["rivers and lakes", "fish barrels"]
+    "locationHints": [
+      "rivers and lakes",
+      "fish barrels"
+    ]
   },
   {
     "id": "honeycomb",
     "name": "Honeycomb",
-    "effects": ["restore-stamina", "fortify-block", "fortify-light-armor", "ravage-stamina"],
+    "effects": [
+      "restore-stamina",
+      "fortify-block",
+      "fortify-light-armor",
+      "ravage-stamina"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["bee hives, Riften area"]
+    "locationHints": [
+      "bee hives, Riften area"
+    ]
   },
   {
     "id": "human-flesh",
     "name": "Human Flesh",
-    "effects": ["damage-health", "paralysis", "restore-magicka", "fortify-sneak"],
+    "effects": [
+      "damage-health",
+      "paralysis",
+      "restore-magicka",
+      "fortify-sneak"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["cannibals, necromancer loot"]
+    "locationHints": [
+      "cannibals, necromancer loot"
+    ]
   },
   {
     "id": "human-heart",
     "name": "Human Heart",
-    "effects": ["damage-health", "damage-magicka", "damage-magicka-regen", "frenzy"],
+    "effects": [
+      "damage-health",
+      "damage-magicka",
+      "damage-magicka-regen",
+      "frenzy"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["necromancer loot"]
+    "locationHints": [
+      "necromancer loot"
+    ]
   },
   {
     "id": "ice-wraith-teeth",
     "name": "Ice Wraith Teeth",
-    "effects": ["weakness-to-frost", "fortify-heavy-armor", "invisibility", "weakness-to-fire"],
+    "effects": [
+      "weakness-to-frost",
+      "fortify-heavy-armor",
+      "invisibility",
+      "weakness-to-fire"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from ice wraiths, cold regions"]
+    "locationHints": [
+      "looted from ice wraiths, cold regions"
+    ]
   },
   {
     "id": "imp-stool",
     "name": "Imp Stool",
-    "effects": ["damage-health", "lingering-damage-health", "paralysis", "restore-health"],
+    "effects": [
+      "damage-health",
+      "lingering-damage-health",
+      "paralysis",
+      "restore-health"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["caves throughout Skyrim"]
+    "locationHints": [
+      "caves throughout Skyrim"
+    ]
   },
   {
     "id": "jarrin-root",
     "name": "Jarrin Root",
-    "effects": ["damage-health", "damage-magicka", "damage-stamina", "damage-magicka-regen"],
+    "effects": [
+      "damage-health",
+      "damage-magicka",
+      "damage-stamina",
+      "damage-magicka-regen"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["given by Astrid during Dark Brotherhood questline, extremely rare"]
+    "locationHints": [
+      "given by Astrid during Dark Brotherhood questline, extremely rare"
+    ]
   },
   {
     "id": "jazbay-grapes",
     "name": "Jazbay Grapes",
-    "effects": ["weakness-to-magic", "fortify-magicka", "regenerate-magicka", "ravage-health"],
+    "effects": [
+      "weakness-to-magic",
+      "fortify-magicka",
+      "regenerate-magicka",
+      "ravage-health"
+    ],
     "source": "base",
     "isPlantable": true,
-    "locationHints": ["volcanic tundra of Eastmarch, hot springs area"]
+    "locationHints": [
+      "volcanic tundra of Eastmarch, hot springs area"
+    ]
   },
   {
     "id": "juniper-berries",
     "name": "Juniper Berries",
-    "effects": ["weakness-to-fire", "fortify-marksman", "regenerate-health", "damage-stamina-regen"],
+    "effects": [
+      "weakness-to-fire",
+      "fortify-marksman",
+      "regenerate-health",
+      "damage-stamina-regen"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["Falkreath Hold, juniper trees"]
+    "locationHints": [
+      "Falkreath Hold, juniper trees"
+    ]
   },
   {
     "id": "large-antlers",
     "name": "Large Antlers",
-    "effects": ["restore-stamina", "fortify-stamina", "slow", "damage-stamina-regen"],
+    "effects": [
+      "restore-stamina",
+      "fortify-stamina",
+      "slow",
+      "damage-stamina-regen"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from elk"]
+    "locationHints": [
+      "looted from elk"
+    ]
   },
   {
     "id": "lavender",
     "name": "Lavender",
-    "effects": ["resist-magic", "fortify-stamina", "ravage-magicka", "fortify-conjuration"],
+    "effects": [
+      "resist-magic",
+      "fortify-stamina",
+      "ravage-magicka",
+      "fortify-conjuration"
+    ],
     "source": "base",
     "isPlantable": true,
-    "locationHints": ["tundra and plains, very common throughout Skyrim"]
+    "locationHints": [
+      "tundra and plains, very common throughout Skyrim"
+    ]
   },
   {
     "id": "luna-moth-wing",
     "name": "Luna Moth Wing",
-    "effects": ["damage-magicka", "fortify-light-armor", "regenerate-health", "invisibility"],
+    "effects": [
+      "damage-magicka",
+      "fortify-light-armor",
+      "regenerate-health",
+      "invisibility"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["caught from luna moths at night in forests"]
+    "locationHints": [
+      "caught from luna moths at night in forests"
+    ]
   },
   {
     "id": "moon-sugar",
     "name": "Moon Sugar",
-    "effects": ["weakness-to-fire", "resist-frost", "restore-magicka", "regenerate-magicka"],
+    "effects": [
+      "weakness-to-fire",
+      "resist-frost",
+      "restore-magicka",
+      "regenerate-magicka"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["Khajiit caravans, contraband"]
+    "locationHints": [
+      "Khajiit caravans, contraband"
+    ]
   },
   {
     "id": "mora-tapinella",
     "name": "Mora Tapinella",
-    "effects": ["restore-magicka", "lingering-damage-health", "regenerate-stamina", "fortify-illusion"],
+    "effects": [
+      "restore-magicka",
+      "lingering-damage-health",
+      "regenerate-stamina",
+      "fortify-illusion"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["on fallen logs, forests throughout Skyrim"]
+    "locationHints": [
+      "on fallen logs, forests throughout Skyrim"
+    ]
   },
   {
     "id": "mudcrab-chitin",
     "name": "Mudcrab Chitin",
-    "effects": ["restore-stamina", "cure-disease", "resist-poison", "resist-fire"],
+    "effects": [
+      "restore-stamina",
+      "cure-disease",
+      "resist-poison",
+      "resist-fire"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from mudcrabs near water"]
+    "locationHints": [
+      "looted from mudcrabs near water"
+    ]
   },
   {
     "id": "namiras-rot",
     "name": "Namira's Rot",
-    "effects": ["damage-magicka", "fear", "fortify-lockpicking", "regenerate-health"],
+    "effects": [
+      "damage-magicka",
+      "fear",
+      "fortify-lockpicking",
+      "regenerate-health"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["dark caves and ruins"]
+    "locationHints": [
+      "dark caves and ruins"
+    ]
   },
   {
     "id": "nirnroot",
     "name": "Nirnroot",
-    "effects": ["damage-health", "damage-stamina", "invisibility", "resist-magic"],
+    "effects": [
+      "damage-health",
+      "damage-stamina",
+      "invisibility",
+      "resist-magic"
+    ],
     "source": "base",
     "isPlantable": true,
-    "locationHints": ["near water throughout Skyrim, glows and chimes"]
+    "locationHints": [
+      "near water throughout Skyrim, glows and chimes"
+    ]
   },
   {
     "id": "nordic-barnacle",
     "name": "Nordic Barnacle",
-    "effects": ["damage-magicka", "waterbreathing", "regenerate-health", "fortify-pickpocket"],
+    "effects": [
+      "damage-magicka",
+      "waterbreathing",
+      "regenerate-health",
+      "fortify-pickpocket"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["underwater on rocks, coastal areas"]
+    "locationHints": [
+      "underwater on rocks, coastal areas"
+    ]
   },
   {
     "id": "orange-dartwing",
     "name": "Orange Dartwing",
-    "effects": ["restore-stamina", "ravage-magicka", "fortify-pickpocket", "lingering-damage-health"],
+    "effects": [
+      "restore-stamina",
+      "ravage-magicka",
+      "fortify-pickpocket",
+      "lingering-damage-health"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["caught from dragonflies near water"]
+    "locationHints": [
+      "caught from dragonflies near water"
+    ]
   },
   {
     "id": "pearl",
     "name": "Pearl",
-    "effects": ["restore-stamina", "weakness-to-magic", "resist-shock", "fortify-restoration"],
+    "effects": [
+      "restore-stamina",
+      "weakness-to-magic",
+      "resist-shock",
+      "fortify-restoration"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["clams in coastal waters, general goods merchants"]
+    "locationHints": [
+      "clams in coastal waters, general goods merchants"
+    ]
   },
   {
     "id": "pine-thrush-egg",
     "name": "Pine Thrush Egg",
-    "effects": ["restore-stamina", "fortify-lockpicking", "weakness-to-poison", "resist-shock"],
+    "effects": [
+      "restore-stamina",
+      "fortify-lockpicking",
+      "weakness-to-poison",
+      "resist-shock"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["bird nests in trees"]
+    "locationHints": [
+      "bird nests in trees"
+    ]
   },
   {
     "id": "powdered-mammoth-tusk",
     "name": "Powdered Mammoth Tusk",
-    "effects": ["restore-stamina", "weakness-to-fire", "fortify-sneak", "fear"],
+    "effects": [
+      "restore-stamina",
+      "weakness-to-fire",
+      "fortify-sneak",
+      "fear"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from mammoths, giant camps"]
+    "locationHints": [
+      "looted from mammoths, giant camps"
+    ]
   },
   {
     "id": "purple-mountain-flower",
     "name": "Purple Mountain Flower",
-    "effects": ["restore-stamina", "fortify-sneak", "lingering-damage-magicka", "resist-frost"],
+    "effects": [
+      "restore-stamina",
+      "fortify-sneak",
+      "lingering-damage-magicka",
+      "resist-frost"
+    ],
     "source": "base",
     "isPlantable": true,
-    "locationHints": ["mountain regions, common throughout Skyrim"]
+    "locationHints": [
+      "mountain regions, common throughout Skyrim"
+    ]
   },
   {
     "id": "red-mountain-flower",
     "name": "Red Mountain Flower",
-    "effects": ["restore-magicka", "ravage-magicka", "fortify-magicka", "damage-health"],
+    "effects": [
+      "restore-magicka",
+      "ravage-magicka",
+      "fortify-magicka",
+      "damage-health"
+    ],
     "source": "base",
     "isPlantable": true,
-    "locationHints": ["very common throughout Skyrim"]
+    "locationHints": [
+      "very common throughout Skyrim"
+    ]
   },
   {
     "id": "river-betty",
     "name": "River Betty",
-    "effects": ["damage-health", "fortify-alteration", "slow", "fortify-carry-weight"],
+    "effects": [
+      "damage-health",
+      "fortify-alteration",
+      "slow",
+      "fortify-carry-weight"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["rivers throughout Skyrim", "fish barrels"]
+    "locationHints": [
+      "rivers throughout Skyrim",
+      "fish barrels"
+    ]
   },
   {
     "id": "rock-warbler-egg",
     "name": "Rock Warbler Egg",
-    "effects": ["restore-health", "fortify-one-handed", "damage-stamina", "weakness-to-magic"],
+    "effects": [
+      "restore-health",
+      "fortify-one-handed",
+      "damage-stamina",
+      "weakness-to-magic"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["bird nests on rocky terrain"]
+    "locationHints": [
+      "bird nests on rocky terrain"
+    ]
   },
   {
     "id": "sabre-cat-eye",
     "name": "Sabre Cat Eye",
-    "effects": ["restore-stamina", "weakness-to-poison", "fortify-marksman", "fortify-illusion"],
+    "effects": [
+      "restore-stamina",
+      "weakness-to-poison",
+      "fortify-marksman",
+      "fortify-illusion"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from sabre cats"]
+    "locationHints": [
+      "looted from sabre cats"
+    ]
   },
   {
     "id": "sabre-cat-tooth",
     "name": "Sabre Cat Tooth",
-    "effects": ["restore-stamina", "fortify-heavy-armor", "fortify-smithing", "weakness-to-poison"],
+    "effects": [
+      "restore-stamina",
+      "fortify-heavy-armor",
+      "fortify-smithing",
+      "weakness-to-poison"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from sabre cats"]
+    "locationHints": [
+      "looted from sabre cats"
+    ]
   },
   {
     "id": "salt-pile",
     "name": "Salt Pile",
-    "effects": ["weakness-to-magic", "fortify-restoration", "slow", "regenerate-magicka"],
+    "effects": [
+      "weakness-to-magic",
+      "fortify-restoration",
+      "slow",
+      "regenerate-magicka"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["very common in homes, inns, and general goods merchants"]
+    "locationHints": [
+      "very common in homes, inns, and general goods merchants"
+    ]
   },
   {
     "id": "scaly-pholiota",
     "name": "Scaly Pholiota",
-    "effects": ["weakness-to-magic", "fortify-illusion", "regenerate-stamina", "fortify-carry-weight"],
+    "effects": [
+      "weakness-to-magic",
+      "fortify-illusion",
+      "regenerate-stamina",
+      "fortify-carry-weight"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["on trees in forests, particularly Falkreath"]
+    "locationHints": [
+      "on trees in forests, particularly Falkreath"
+    ]
   },
   {
     "id": "silverside-perch",
     "name": "Silverside Perch",
-    "effects": ["restore-stamina", "damage-stamina-regen", "ravage-health", "weakness-to-frost"],
+    "effects": [
+      "restore-stamina",
+      "damage-stamina-regen",
+      "ravage-health",
+      "weakness-to-frost"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["rivers and lakes", "fish barrels"]
+    "locationHints": [
+      "rivers and lakes",
+      "fish barrels"
+    ]
   },
   {
     "id": "skeever-tail",
     "name": "Skeever Tail",
-    "effects": ["damage-stamina-regen", "ravage-health", "fortify-light-armor", "damage-health"],
+    "effects": [
+      "damage-stamina-regen",
+      "ravage-health",
+      "fortify-light-armor",
+      "damage-health"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from skeevers"]
+    "locationHints": [
+      "looted from skeevers"
+    ]
   },
   {
     "id": "slaughterfish-egg",
     "name": "Slaughterfish Egg",
-    "effects": ["resist-poison", "fortify-pickpocket", "lingering-damage-health", "fortify-stamina"],
+    "effects": [
+      "resist-poison",
+      "fortify-pickpocket",
+      "lingering-damage-health",
+      "fortify-stamina"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["slaughterfish egg nests in lakes"]
+    "locationHints": [
+      "slaughterfish egg nests in lakes"
+    ]
   },
   {
     "id": "slaughterfish-scales",
     "name": "Slaughterfish Scales",
-    "effects": ["resist-frost", "lingering-damage-health", "fortify-heavy-armor", "fortify-block"],
+    "effects": [
+      "resist-frost",
+      "lingering-damage-health",
+      "fortify-heavy-armor",
+      "fortify-block"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from slaughterfish"]
+    "locationHints": [
+      "looted from slaughterfish"
+    ]
   },
   {
     "id": "small-antlers",
     "name": "Small Antlers",
-    "effects": ["weakness-to-poison", "fortify-restoration", "lingering-damage-stamina", "damage-health"],
+    "effects": [
+      "weakness-to-poison",
+      "fortify-restoration",
+      "lingering-damage-stamina",
+      "damage-health"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from deer"]
+    "locationHints": [
+      "looted from deer"
+    ]
   },
   {
     "id": "small-pearl",
     "name": "Small Pearl",
-    "effects": ["restore-stamina", "fortify-one-handed", "fortify-restoration", "resist-frost"],
+    "effects": [
+      "restore-stamina",
+      "fortify-one-handed",
+      "fortify-restoration",
+      "resist-frost"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["clams in coastal waters, general goods merchants"]
+    "locationHints": [
+      "clams in coastal waters, general goods merchants"
+    ]
   },
   {
     "id": "snowberries",
     "name": "Snowberries",
-    "effects": ["resist-fire", "fortify-enchanting", "resist-frost", "resist-shock"],
+    "effects": [
+      "resist-fire",
+      "fortify-enchanting",
+      "resist-frost",
+      "resist-shock"
+    ],
     "source": "base",
     "isPlantable": true,
-    "locationHints": ["snowy regions, very common in Winterhold and The Pale"]
+    "locationHints": [
+      "snowy regions, very common in Winterhold and The Pale"
+    ]
   },
   {
     "id": "spider-egg",
     "name": "Spider Egg",
-    "effects": ["damage-stamina", "ravage-magicka", "fortify-lockpicking", "fortify-marksman"],
+    "effects": [
+      "damage-stamina",
+      "ravage-magicka",
+      "fortify-lockpicking",
+      "fortify-marksman"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["spider lairs in caves"]
+    "locationHints": [
+      "spider lairs in caves"
+    ]
   },
   {
     "id": "spriggan-sap",
     "name": "Spriggan Sap",
-    "effects": ["damage-magicka-regen", "fortify-enchanting", "fortify-alteration", "fortify-two-handed"],
+    "effects": [
+      "damage-magicka-regen",
+      "fortify-enchanting",
+      "fortify-alteration",
+      "fortify-two-handed"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from spriggans"]
+    "locationHints": [
+      "looted from spriggans"
+    ]
   },
   {
     "id": "swamp-fungal-pod",
     "name": "Swamp Fungal Pod",
-    "effects": ["resist-shock", "lingering-damage-magicka", "paralysis", "restore-health"],
+    "effects": [
+      "resist-shock",
+      "lingering-damage-magicka",
+      "paralysis",
+      "restore-health"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["swamps of Hjaalmarch, Morthal area"]
+    "locationHints": [
+      "swamps of Hjaalmarch, Morthal area"
+    ]
   },
   {
     "id": "taproot",
     "name": "Taproot",
-    "effects": ["weakness-to-magic", "fortify-illusion", "regenerate-magicka", "restore-magicka"],
+    "effects": [
+      "weakness-to-magic",
+      "fortify-illusion",
+      "regenerate-magicka",
+      "restore-magicka"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from spriggans"]
+    "locationHints": [
+      "looted from spriggans"
+    ]
   },
   {
     "id": "thistle-branch",
     "name": "Thistle Branch",
-    "effects": ["resist-frost", "ravage-stamina", "resist-poison", "fortify-heavy-armor"],
+    "effects": [
+      "resist-frost",
+      "ravage-stamina",
+      "resist-poison",
+      "fortify-heavy-armor"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["common throughout Skyrim, tundra and plains"]
+    "locationHints": [
+      "common throughout Skyrim, tundra and plains"
+    ]
   },
   {
     "id": "troll-fat",
     "name": "Troll Fat",
-    "effects": ["resist-poison", "fortify-two-handed", "frenzy", "damage-health"],
+    "effects": [
+      "resist-poison",
+      "fortify-two-handed",
+      "frenzy",
+      "damage-health"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from trolls"]
+    "locationHints": [
+      "looted from trolls"
+    ]
   },
   {
     "id": "tundra-cotton",
     "name": "Tundra Cotton",
-    "effects": ["resist-magic", "fortify-magicka", "fortify-block", "fortify-barter"],
+    "effects": [
+      "resist-magic",
+      "fortify-magicka",
+      "fortify-block",
+      "fortify-barter"
+    ],
     "source": "base",
     "isPlantable": true,
-    "locationHints": ["tundra plains, very common in Whiterun Hold"]
+    "locationHints": [
+      "tundra plains, very common in Whiterun Hold"
+    ]
   },
   {
     "id": "vampire-dust",
     "name": "Vampire Dust",
-    "effects": ["invisibility", "restore-magicka", "regenerate-health", "cure-disease"],
+    "effects": [
+      "invisibility",
+      "restore-magicka",
+      "regenerate-health",
+      "cure-disease"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from vampires"]
+    "locationHints": [
+      "looted from vampires"
+    ]
   },
   {
     "id": "void-salts",
     "name": "Void Salts",
-    "effects": ["weakness-to-shock", "resist-magic", "damage-health", "fortify-magicka"],
+    "effects": [
+      "weakness-to-shock",
+      "resist-magic",
+      "damage-health",
+      "fortify-magicka"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from storm atronachs, general goods merchants"]
+    "locationHints": [
+      "looted from storm atronachs, general goods merchants"
+    ]
   },
   {
     "id": "wheat",
     "name": "Wheat",
-    "effects": ["restore-health", "fortify-health", "damage-stamina-regen", "lingering-damage-magicka"],
+    "effects": [
+      "restore-health",
+      "fortify-health",
+      "damage-stamina-regen",
+      "lingering-damage-magicka"
+    ],
     "source": "base",
     "isPlantable": true,
-    "locationHints": ["farms throughout Skyrim, very common"]
+    "locationHints": [
+      "farms throughout Skyrim, very common"
+    ]
   },
   {
     "id": "white-cap",
     "name": "White Cap",
-    "effects": ["weakness-to-frost", "fortify-heavy-armor", "restore-magicka", "ravage-magicka"],
+    "effects": [
+      "weakness-to-frost",
+      "fortify-heavy-armor",
+      "restore-magicka",
+      "ravage-magicka"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["caves throughout Skyrim"]
+    "locationHints": [
+      "caves throughout Skyrim"
+    ]
   },
   {
     "id": "wisp-wrappings",
     "name": "Wisp Wrappings",
-    "effects": ["restore-stamina", "fortify-destruction", "fortify-carry-weight", "resist-magic"],
+    "effects": [
+      "restore-stamina",
+      "fortify-destruction",
+      "fortify-carry-weight",
+      "resist-magic"
+    ],
     "source": "base",
     "isPlantable": false,
-    "locationHints": ["looted from wisps and wispmother"]
+    "locationHints": [
+      "looted from wisps and wispmother"
+    ]
   },
   {
     "id": "yellow-mountain-flower",
     "name": "Yellow Mountain Flower",
-    "effects": ["resist-poison", "fortify-restoration", "fortify-health", "damage-magicka-regen"],
+    "effects": [
+      "resist-poison",
+      "fortify-restoration",
+      "fortify-health",
+      "damage-magicka-regen"
+    ],
     "source": "base",
     "isPlantable": true,
-    "locationHints": ["mountain regions, Riften area"]
+    "locationHints": [
+      "mountain regions, Riften area"
+    ]
   },
   {
     "id": "emperor-parasol-moss",
     "name": "Emperor Parasol Moss",
-    "effects": ["damage-health", "fortify-magicka", "regenerate-health", "resist-shock"],
+    "effects": [
+      "damage-health",
+      "fortify-magicka",
+      "regenerate-health",
+      "resist-shock"
+    ],
     "source": "dragonborn",
     "isPlantable": false,
-    "locationHints": ["Solstheim, under Emperor Parasol mushrooms"]
+    "locationHints": [
+      "Solstheim, under Emperor Parasol mushrooms"
+    ]
   },
   {
     "id": "ash-creep-cluster",
     "name": "Ash Creep Cluster",
-    "effects": ["damage-stamina", "invisibility", "resist-fire", "fortify-magicka"],
+    "effects": [
+      "damage-stamina",
+      "invisibility",
+      "resist-fire",
+      "fortify-magicka"
+    ],
     "source": "dragonborn",
     "isPlantable": false,
-    "locationHints": ["Solstheim, ashen regions"]
+    "locationHints": [
+      "Solstheim, ashen regions"
+    ]
   },
   {
     "id": "ash-hopper-jelly",
     "name": "Ash Hopper Jelly",
-    "effects": ["restore-health", "fortify-light-armor", "resist-shock", "weakness-to-frost"],
+    "effects": [
+      "restore-health",
+      "fortify-light-armor",
+      "resist-shock",
+      "weakness-to-frost"
+    ],
     "source": "dragonborn",
     "isPlantable": false,
-    "locationHints": ["Solstheim, looted from ash hoppers"]
+    "locationHints": [
+      "Solstheim, looted from ash hoppers"
+    ]
   },
   {
     "id": "ashen-grass-pod",
     "name": "Ashen Grass Pod",
-    "effects": ["resist-fire", "weakness-to-shock", "fortify-lockpicking", "fortify-sneak"],
+    "effects": [
+      "resist-fire",
+      "weakness-to-shock",
+      "fortify-lockpicking",
+      "fortify-sneak"
+    ],
     "source": "dragonborn",
     "isPlantable": false,
-    "locationHints": ["Solstheim, ashen tundra"]
+    "locationHints": [
+      "Solstheim, ashen tundra"
+    ]
   },
   {
     "id": "boar-tusk",
     "name": "Boar Tusk",
-    "effects": ["fortify-stamina", "fortify-health", "fortify-block", "damage-stamina-regen"],
+    "effects": [
+      "fortify-stamina",
+      "fortify-health",
+      "fortify-block",
+      "damage-stamina-regen"
+    ],
     "source": "dragonborn",
     "isPlantable": false,
-    "locationHints": ["Solstheim, looted from bristlebacks and horkers"]
+    "locationHints": [
+      "Solstheim, looted from bristlebacks and horkers"
+    ]
   },
   {
     "id": "burnt-spriggan-wood",
     "name": "Burnt Spriggan Wood",
-    "effects": ["weakness-to-fire", "fortify-alteration", "damage-magicka-regen", "slow"],
+    "effects": [
+      "weakness-to-fire",
+      "fortify-alteration",
+      "damage-magicka-regen",
+      "slow"
+    ],
     "source": "dragonborn",
     "isPlantable": false,
-    "locationHints": ["Solstheim, looted from burnt spriggans"]
+    "locationHints": [
+      "Solstheim, looted from burnt spriggans"
+    ]
   },
   {
     "id": "felsaad-tern-feathers",
     "name": "Felsaad Tern Feathers",
-    "effects": ["restore-health", "fortify-light-armor", "cure-disease", "resist-magic"],
+    "effects": [
+      "restore-health",
+      "fortify-light-armor",
+      "cure-disease",
+      "resist-magic"
+    ],
     "source": "dragonborn",
     "isPlantable": false,
-    "locationHints": ["Solstheim, looted from felsaad terns"]
+    "locationHints": [
+      "Solstheim, looted from felsaad terns"
+    ]
   },
   {
     "id": "nordic-barnacle-cluster",
     "name": "Nordic Barnacle Cluster",
-    "effects": ["damage-magicka", "waterbreathing", "regenerate-health", "fortify-pickpocket"],
+    "effects": [
+      "damage-magicka",
+      "waterbreathing",
+      "regenerate-health",
+      "fortify-pickpocket"
+    ],
     "source": "dragonborn",
     "isPlantable": false,
-    "locationHints": ["Solstheim, underwater"]
+    "locationHints": [
+      "Solstheim, underwater"
+    ]
   },
   {
     "id": "netch-jelly",
     "name": "Netch Jelly",
-    "effects": ["paralysis", "fortify-carry-weight", "restore-stamina", "fear"],
+    "effects": [
+      "paralysis",
+      "fortify-carry-weight",
+      "restore-stamina",
+      "fear"
+    ],
     "source": "dragonborn",
     "isPlantable": false,
-    "locationHints": ["Solstheim, looted from netch"]
+    "locationHints": [
+      "Solstheim, looted from netch"
+    ]
   },
   {
     "id": "riekling-spear",
     "name": "Riekling Spear",
-    "effects": ["weakness-to-fire", "ravage-stamina", "fortify-marksman", "fortify-two-handed"],
+    "effects": [
+      "weakness-to-fire",
+      "ravage-stamina",
+      "fortify-marksman",
+      "fortify-two-handed"
+    ],
     "source": "dragonborn",
     "isPlantable": false,
-    "locationHints": ["Solstheim, looted from rieklings"]
+    "locationHints": [
+      "Solstheim, looted from rieklings"
+    ]
   },
   {
     "id": "scrib-jelly",
     "name": "Scrib Jelly",
-    "effects": ["weakness-to-poison", "fortify-stamina", "restore-magicka", "ravage-magicka"],
+    "effects": [
+      "weakness-to-poison",
+      "fortify-stamina",
+      "restore-magicka",
+      "ravage-magicka"
+    ],
     "source": "dragonborn",
     "isPlantable": false,
-    "locationHints": ["Solstheim, looted from scribs"]
+    "locationHints": [
+      "Solstheim, looted from scribs"
+    ]
   },
   {
     "id": "spawn-ash",
     "name": "Spawn Ash",
-    "effects": ["ravage-stamina", "resist-fire", "fortify-enchanting", "ravage-magicka"],
+    "effects": [
+      "ravage-stamina",
+      "resist-fire",
+      "fortify-enchanting",
+      "ravage-magicka"
+    ],
     "source": "dragonborn",
     "isPlantable": false,
-    "locationHints": ["Solstheim, looted from ash spawn"]
-  },
-  {
-    "id": "bone-meal-dragonborn",
-    "name": "Bone Meal",
-    "effects": ["damage-stamina", "resist-fire", "fortify-conjuration", "damage-health"],
-    "source": "dragonborn",
-    "isPlantable": false,
-    "locationHints": ["Solstheim, looted from draugr"]
+    "locationHints": [
+      "Solstheim, looted from ash spawn"
+    ]
   },
   {
     "id": "bloodgrass",
     "name": "Bloodgrass",
-    "effects": ["resist-poison", "fortify-stamina", "invisibility", "fortify-carry-weight"],
+    "effects": [
+      "resist-poison",
+      "fortify-stamina",
+      "invisibility",
+      "fortify-carry-weight"
+    ],
     "source": "dawnguard",
     "isPlantable": false,
-    "locationHints": ["Soul Cairn"]
+    "locationHints": [
+      "Soul Cairn"
+    ]
   },
   {
     "id": "canticle-bark",
     "name": "Canticle Bark",
-    "effects": ["weakness-to-fire", "fortify-stamina", "ravage-stamina", "fortify-two-handed"],
+    "effects": [
+      "weakness-to-fire",
+      "fortify-stamina",
+      "ravage-stamina",
+      "fortify-two-handed"
+    ],
     "source": "dawnguard",
     "isPlantable": false,
-    "locationHints": ["Forgotten Vale"]
+    "locationHints": [
+      "Forgotten Vale"
+    ]
   },
   {
     "id": "chaurus-hunter-antennae",
     "name": "Chaurus Hunter Antennae",
-    "effects": ["damage-stamina", "fortify-conjuration", "damage-magicka-regen", "fortify-enchanting"],
+    "effects": [
+      "damage-stamina",
+      "fortify-conjuration",
+      "damage-magicka-regen",
+      "fortify-enchanting"
+    ],
     "source": "dawnguard",
     "isPlantable": false,
-    "locationHints": ["Darkfall Cave and Forgotten Vale, looted from chaurus hunters"]
+    "locationHints": [
+      "Darkfall Cave and Forgotten Vale, looted from chaurus hunters"
+    ]
   },
   {
     "id": "gleamblossom",
     "name": "Gleamblossom",
-    "effects": ["resist-magic", "fear", "regenerate-health", "paralysis"],
+    "effects": [
+      "resist-magic",
+      "fear",
+      "regenerate-health",
+      "paralysis"
+    ],
     "source": "dawnguard",
     "isPlantable": false,
-    "locationHints": ["Forgotten Vale"]
+    "locationHints": [
+      "Forgotten Vale"
+    ]
   },
   {
     "id": "soul-gem-dust",
     "name": "Soul Gem Dust",
-    "effects": ["damage-magicka", "fortify-enchanting", "resist-shock", "weakness-to-frost"],
+    "effects": [
+      "damage-magicka",
+      "fortify-enchanting",
+      "resist-shock",
+      "weakness-to-frost"
+    ],
     "source": "dawnguard",
     "isPlantable": false,
-    "locationHints": ["Soul Cairn"]
+    "locationHints": [
+      "Soul Cairn"
+    ]
   },
   {
     "id": "vampire-royal-blood",
     "name": "Vampire Royal Blood",
-    "effects": ["ravage-health", "ravage-stamina", "restore-magicka", "fortify-destruction"],
+    "effects": [
+      "ravage-health",
+      "ravage-stamina",
+      "restore-magicka",
+      "fortify-destruction"
+    ],
     "source": "dawnguard",
     "isPlantable": false,
-    "locationHints": ["looted from vampire lords and royal vampires"]
+    "locationHints": [
+      "looted from vampire lords and royal vampires"
+    ]
   },
   {
     "id": "wayshrines-ice-wraith-teeth",
     "name": "Ice Wraith Bespoke Teeth",
-    "effects": ["weakness-to-frost", "fortify-heavy-armor", "invisibility", "weakness-to-fire"],
+    "effects": [
+      "weakness-to-frost",
+      "fortify-heavy-armor",
+      "invisibility",
+      "weakness-to-fire"
+    ],
     "source": "dawnguard",
     "isPlantable": false,
-    "locationHints": ["Forgotten Vale"]
+    "locationHints": [
+      "Forgotten Vale"
+    ]
   }
 ]
