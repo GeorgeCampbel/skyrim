@@ -33,14 +33,17 @@ export function ingredientCardState(
   );
   const selectedEffectSet = new Set(sel.effectIds);
 
+  // If the user has pinned specific effects, only show ingredients that have those effects
+  if (selectedEffectSet.size > 0) {
+    return ingredient.effects.some((e) => selectedEffectSet.has(e))
+      ? "default"
+      : "muted";
+  }
+
   const sharesWithSelectedIngredient = ingredient.effects.some((e) =>
     selectedIngredientEffectIds.has(e)
   );
-  const hasSelectedEffect = ingredient.effects.some((e) =>
-    selectedEffectSet.has(e)
-  );
-
-  return sharesWithSelectedIngredient || hasSelectedEffect ? "default" : "muted";
+  return sharesWithSelectedIngredient ? "default" : "muted";
 }
 
 export function effectCardState(
